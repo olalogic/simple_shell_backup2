@@ -22,7 +22,7 @@ typedef struct commands
 	int prev_valid;
 
 	char separator;
-	char *command;
+	char **command;
 	command_t *next;
 } command_t;
 
