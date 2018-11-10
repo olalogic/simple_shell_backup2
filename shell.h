@@ -28,4 +28,6 @@ typedef struct commands
 void free_token_list(char **tokens);
 void free_command_list(command_t **head);
 command_t *create_command(char separator, char **command);
+char **strtow(char *str);
+
 #endif /* _SHELL_H_ */
