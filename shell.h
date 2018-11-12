@@ -40,7 +40,7 @@ typedef struct queue_s
 } queue_t;
 
 void free_token_list(char **tokens);
-void free_command_list(command_t **head);
+void free_command_queue(command_t **head);
 command_t *create_command(char separator, char **command);
 char **strtow(char *str);
 int is_delim(char ch, char *delims);
