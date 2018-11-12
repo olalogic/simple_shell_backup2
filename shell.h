@@ -16,7 +16,7 @@
  * @next: Address of next node
  *
  */
-typedef struct commands
+typedef struct command_s
 {
 	int prev_valid;
 
@@ -29,5 +29,6 @@ void free_token_list(char **tokens);
 void free_command_list(command_t **head);
 command_t *create_command(char separator, char **command);
 char **strtow(char *str);
+int is_delim(char ch, char *delims);
 
 #endif /* _SHELL_H_ */
