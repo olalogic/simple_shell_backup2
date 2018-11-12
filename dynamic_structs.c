@@ -19,22 +19,25 @@ command_t *create_command(char separator, char **command)
 	return (ret);
 }
 /**
- * free_command_list - frees a linked list of command_t's
- * @head: double pointer to the head of the linked list
+ * free_command_queue - frees a queue_t of command_t's
+ * @q: pointer to our queue containing commands
  *
  * Return: always void.
  */
-void free_command_list(command_t **head)
+void free_command_queue(queue_t *q)
 {
-	if (head == NULL)
+	command_t *temp = NULL;
+
+	if (!q)
 		return;
-	while (*head)
+	temp = q->front;
+	while (temp)
 	{
-		free_token_list((*head)->command);	
-		free(*head);
-		*head = (*head)->next;
+		free_token_list(temp->command);
+		free(temp);
+		temp = temp->next;
 	}
-	head = NULL;
+	q->front = q->rear = NULL;
 }
 /**
  * free_token_list - frees an array of tokens previously malloced
