@@ -2,7 +2,7 @@
 #define _SHELL_H_
 
 /**
- * struct commands - Structure of each node
+ * struct command_s - Structure of each node
  *
  * @prev_valid: Check if previous command
  * was successful
@@ -25,10 +25,27 @@ typedef struct command_s
 	command_t *next;
 } command_t;
 
+/**
+ * struct queue_s - Structure of queue
+ *
+ * @front: Pointer to the first node
+ *
+ * @rear: Pointer to the front+1 node
+ *
+ */
+
+typedef struct queue_s
+{
+	command_t *front, *rear;
+} queue_t;
+
 void free_token_list(char **tokens);
 void free_command_list(command_t **head);
 command_t *create_command(char separator, char **command);
 char **strtow(char *str);
 int is_delim(char ch, char *delims);
+queue_t *create_queue();
+int enqueue(queue_t *q, char separator, char **command);
+command_t dequeue(queue_t *q);
 
 #endif /* _SHELL_H_ */
