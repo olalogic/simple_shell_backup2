@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-void print_prompt();
+void print_prompt(void);
 
 /**
  * start_shell - starts our loop looking for user's commands
  *
  * Return: 0 on success, anything else on failure, error code dependent
  */
-int start_shell()
+int start_shell(void)
 {
 	char *input = NULL;
 	size_t input_buff_size = 0;
@@ -48,7 +48,7 @@ int start_shell()
  *
  * Return: always void.
  */
-void print_prompt()
+void print_prompt(void)
 {
 	write(STDOUT_FILENO, "> ", 2);
 }

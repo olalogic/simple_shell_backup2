@@ -6,6 +6,8 @@
  * @command: array of pointers to tokens used in command including command
  * itself.
  * @separator: the character separator, either ';', '|', '&', or '\0'(none)
+ *
+ * Return: pointer to the newly allocated command
  */
 
 command_t *create_command(char separator, char **command)

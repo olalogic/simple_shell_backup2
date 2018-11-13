@@ -20,7 +20,7 @@ queue_t *parse_string(char *str)
 	int beg_ind = 0, tok_ind = 0, end_ind = -1, sep_ind = -1;
 
 	queue_t *q = NULL;
-	
+
 	if (!str)
 		return (NULL);
 

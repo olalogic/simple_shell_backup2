@@ -5,6 +5,7 @@
  * exit_shell - Frees the queue and return exit code
  *
  * @q: Pointer to the queue
+ * @status: exit code to exit with
  *
  * Return: See macro values
  */
