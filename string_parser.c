@@ -105,15 +105,40 @@ int is_logic(char *token)
 char **get_command_tokens(char **raw_tokens, int beg_ind, int end_ind)
 {
 	char **com_tokens = NULL;
+	char *word_copy = NULL;
+
 	int com_ind = 0;
+	int ctrl_ctr = 0;
+	int word_len = 0;
 
 		/* +1 account for index starting at 0, +1 for NULL too */
 	com_tokens = malloc(sizeof(char *) * (((end_ind + 1) - beg_ind) + 1));
 	if (!com_tokens)
 		return (NULL);
 	while (beg_ind <= end_ind)
-	{ /* copy the actual pointers. NOTE not creating new copy of data. */
-		com_tokens[com_ind++] = raw_tokens[beg_ind++];
+	{
+		word_len = 0;
+
+		/* gets length of current token */
+		while (raw_tokens[beg_ind][word_len])
+			word_len++;
+
+		/* create space for chars of each word */
+		com_tokens[com_ind] =  malloc(sizeof(char) * word_len + 1);
+		if (!com_tokens[com_ind])
+		{
+			free_token_list(com_tokens);
+			return (NULL);
+		}
+
+		ctrl_ctr = 0;
+
+		/* copy the raw_token to word_copy */
+		while (raw_tokens[beg_ind][ctrl_ctr])
+		{
+			com_tokens[com_ind][ctrl_ctr] = raw_tokens[beg_ind][ctrl_ctr];
+			ctrl_ctr++;
+		}
 	}
 	com_tokens[com_ind] = NULL; /* NULL terminate the array */
 	return (com_tokens);
