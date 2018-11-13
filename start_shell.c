@@ -25,6 +25,8 @@ int start_shell()
 			return (-1); /* failed to execute commands */
 		free_command_queue(com_q);
 	}
+
+	return (0);
 }
 /**
  * print_prompt - prints the prompt for user to input command
