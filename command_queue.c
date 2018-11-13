@@ -59,7 +59,7 @@ int enqueue(queue_t *q, char separator, char **command)
  * Return: Node that was executed
  */
 
-command_t dequeue(queue_t *q)
+command_t *dequeue(queue_t *q)
 {
 	command_t *old_node = NULL;
 
@@ -73,4 +73,37 @@ command_t dequeue(queue_t *q)
 		q->rear = NULL;
 
 	return (old_node);
+}
+
+
+/**
+ * print_queue - Prints the entire contents of the node
+ *
+ * @q: Pointer to the queue
+ *
+ * Return: Node that was executed
+ */
+
+void print_queue(queue_t *q)
+{
+	int i = 0;
+
+	command_t *temp = NULL;
+
+	if (!q)
+		printf("NULL QUEUE\0");
+
+	temp = q->front;
+
+	while (temp)
+	{
+		printf("%d\n", temp->prev_valid);
+		printf("%c\n", temp->separator);
+
+		while (temp->command[i])
+			printf("%s ,", temp->command[i++]);
+		printf("\n");
+		temp = temp->next;
+		printf("\n\n");
+	}
 }
