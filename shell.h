@@ -39,13 +39,15 @@ typedef struct queue_s
 	command_t *front, *rear;
 } queue_t;
 
+queue_t *parse_string(char *input_str);
+int execute_commands(queue_t *command_q);
 void free_token_list(char **tokens);
-void free_command_queue(command_t **head);
+void free_command_queue(queue_t *command_q);
 command_t *create_command(char separator, char **command);
 char **strtow(char *str);
 int is_delim(char ch, char *delims);
 queue_t *create_queue();
 int enqueue(queue_t *q, char separator, char **command);
-command_t dequeue(queue_t *q);
+command_t *dequeue(queue_t *q);
 
 #endif /* _SHELL_H_ */
