@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stdio.h>
+#include <unistd.h>
 
 /**
  * print_no_file_error - prints the no file error message to STDOUT
