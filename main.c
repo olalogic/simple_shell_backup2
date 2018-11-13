@@ -14,7 +14,8 @@
 
 int main(int argc, char **argv)
 {
-	start_shell();
+	(void)argc;
+	(void)argv;
 
-	return (0);
+	return (start_shell());
 }

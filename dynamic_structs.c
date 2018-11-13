@@ -49,6 +49,8 @@ void free_command_queue(queue_t *q)
  */
 void free_token_list(char **tokens)
 {
+	int i = 0;
+
 	if (!tokens)
 		return;
 	while (tokens)

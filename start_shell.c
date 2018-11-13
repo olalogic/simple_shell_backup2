@@ -1,6 +1,9 @@
 #include "shell.h"
 #include <stdio.h>
 #include <unistd.h>
+
+void print_prompt();
+
 /**
  * start_shell - starts our loop looking for user's commands
  *
@@ -10,7 +13,6 @@ int start_shell()
 {
 	char *input = NULL;
 	size_t input_buff_size = 0;
-	int err = 0;
 	queue_t *com_q = NULL;
 
 	while (1)

@@ -15,6 +15,7 @@ char **get_command_tokens(char **raw_tokens, int beg_ind, int end_ind);
 queue_t *parse_string(char *str)
 {
 	char **raw_tokens, **sub_tokens;
+	char separator = '\0';
 	int beg_ind = 0, tok_ind = 0, end_ind = -1, sep_ind = -1;
 
 	queue_t *q = NULL;
@@ -45,8 +46,8 @@ queue_t *parse_string(char *str)
 				free_command_queue(q);
 				return (NULL);
 			}
-			seperator = (sep_ind >= 0) ? *(raw_tokens[sep_ind]) : '\0';
-			if (!enqueue(q, seperator, sub_tokens)) /* insert fail */
+			separator = (sep_ind >= 0) ? *(raw_tokens[sep_ind]) : '\0';
+			if (!enqueue(q, separator, sub_tokens)) /* insert fail */
 			{
 				/* free everything & return NULL */
 				free_token_list(sub_tokens);
@@ -83,11 +84,11 @@ int is_logic(char *token)
 	} /* will not be run if sep is ';' */
 	else if (is_delim(*token, LOGIC_DELIMS))
 	{
-		else if (is_delim(*(token + 1), LOGIC_DELIMS))
+		if (is_delim(*(token + 1), LOGIC_DELIMS))
 		{
 			if (*(token + 2) == '\0') /* only contains delim and NULL */
 				return (1);
-			return (-1) /* contains extra characters */
+			return (-1); /* contains extra characters */
 		}
 		else
 			return (0);
@@ -106,7 +107,6 @@ int is_logic(char *token)
 char **get_command_tokens(char **raw_tokens, int beg_ind, int end_ind)
 {
 	char **com_tokens = NULL;
-	char *word_copy = NULL;
 
 	int com_ind = 0;
 	int ctrl_ctr = 0;

@@ -37,7 +37,7 @@ int enqueue(queue_t *q, char separator, char **command)
 {
 	command_t *new_node = create_command(separator, command);
 
-	if (!command_t)
+	if (!new_node)
 		return (0);
 
 	if (!q->rear)
@@ -93,7 +93,7 @@ void print_queue(queue_t *q)
 	command_t *temp = NULL;
 
 	if (!q)
-		printf("NULL QUEUE\0");
+		printf("NULL QUEUE");
 
 	temp = q->front;
 

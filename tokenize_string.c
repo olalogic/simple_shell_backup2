@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include "shell.h"
 int get_word_length(char *str);
 int is_delim(char ch, char *delims);
 int get_word_count(char *str);

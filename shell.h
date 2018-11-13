@@ -1,6 +1,8 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+#define DELIMS " \r\t\n\a"
+
 /**
  * struct command_s - Structure of each node
  *
@@ -22,7 +24,7 @@ typedef struct command_s
 
 	char separator;
 	char **command;
-	command_t *next;
+	struct command_s *next;
 } command_t;
 
 /**
@@ -39,6 +41,7 @@ typedef struct queue_s
 	command_t *front, *rear;
 } queue_t;
 
+int start_shell();
 queue_t *parse_string(char *input_str);
 int execute_commands(queue_t *command_q);
 void free_token_list(char **tokens);
