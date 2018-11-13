@@ -101,11 +101,11 @@ void print_queue(queue_t *q)
 	{
 		printf("%d\n", temp->prev_valid);
 		printf("%c\n", temp->separator);
-
+		i = 0;
 		while (temp->command[i])
-			printf("%s ,", temp->command[i++]);
+			printf("%s, ", temp->command[i++]);
 		printf("\n");
 		temp = temp->next;
-		printf("\n\n");
+		printf("\nENDOFCOMMAND\n");
 	}
 }

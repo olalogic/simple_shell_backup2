@@ -142,8 +142,8 @@ char **get_command_tokens(char **raw_tokens, int beg_ind, int end_ind)
 			com_tokens[com_ind][ctrl_ctr] = raw_tokens[beg_ind][ctrl_ctr];
 			ctrl_ctr++;
 		}
-		raw_tokens[beg_ind][ctrl_ctr] = '\0';
-		beg_ind++;
+		com_tokens[com_ind][ctrl_ctr] = '\0';
+		beg_ind++, com_ind++;
 	}
 	com_tokens[com_ind] = NULL; /* NULL terminate the array */
 	return (com_tokens);
