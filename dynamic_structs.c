@@ -7,6 +7,7 @@
  * itself.
  * @separator: the character separator, either ';', '|', '&', or '\0'(none)
  */
+
 command_t *create_command(char separator, char **command)
 {
 	command_t *ret;
@@ -20,12 +21,14 @@ command_t *create_command(char separator, char **command)
 	ret->next = NULL;
 	return (ret);
 }
+
 /**
  * free_command_queue - frees a queue_t of command_t's
  * @q: pointer to our queue containing commands
  *
  * Return: always void.
  */
+
 void free_command_queue(queue_t *q)
 {
 	command_t *temp = NULL;
@@ -41,12 +44,14 @@ void free_command_queue(queue_t *q)
 	}
 	q->front = q->rear = NULL;
 }
+
 /**
  * free_token_list - frees an array of tokens previously malloced
  * @tokens: 2D array of tokens
  *
  * Return: always void.
  */
+
 void free_token_list(char **tokens)
 {
 	int i = 0;
