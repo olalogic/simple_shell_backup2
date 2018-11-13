@@ -9,12 +9,11 @@
  * Return: See macro values
  */
 
-void exit_shell(queue_t *q)
+void exit_shell(queue_t *q, int status)
 {
 	if (!q)
-		return (EXIT_FAILURE);
+		exit(status);
 
 	free_command_queue(q);
-	return (EXIT_SUCCESS);
-	exit();
+	exit(status);
 }
