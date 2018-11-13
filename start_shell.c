@@ -15,6 +15,10 @@ int start_shell(void)
 	size_t input_buff_size = 0;
 	queue_t *com_q = NULL;
 
+	/* register our signal handlers with kernal for things like SIGINT */
+	if (register_signal_handlers() < 0)
+		return (-1);
+	/* loop through and get user input */
 	while (1)
 	{
 		print_prompt();
@@ -27,7 +31,6 @@ int start_shell(void)
 			}
 			continue; /* ask for input again */
 		}
-		printf("Got input line:%s\n", input);
 		com_q = parse_string(input);
 		if (!com_q)
 			return (-1); /* failed to create list of commands */

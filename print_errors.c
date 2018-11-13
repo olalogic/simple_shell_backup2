@@ -11,3 +11,13 @@ void print_no_file_error(void)
 {
 	write(STDOUT_FILENO, "No such file or directory\n", 26);
 }
+
+/**
+ * print_signal_reg_error - prints the sig registry error message to STDOUT
+ *
+ * Return: always void.
+ */
+void print_signal_reg_error(void)
+{
+	write(STDOUT_FILENO, "Failed to register signals in kernal\n", 37);
+}
