@@ -40,7 +40,7 @@ typedef struct queue_s
 	command_t *front, *rear;
 } queue_t;
 
-int start_shell();
+int start_shell(void);
 queue_t *parse_string(char *input_str);
 int execute_commands(queue_t *command_q);
 void free_token_list(char **tokens);
@@ -54,5 +54,8 @@ command_t *dequeue(queue_t *q);
 void print_queue(queue_t *q);
 void exit_shell(queue_t *q, int status);
 void signal_handler(int sig_no);
+
+/* print errors */
+void print_no_file_error(void);
 
 #endif /* _SHELL_H_ */
