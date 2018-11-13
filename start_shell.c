@@ -1,7 +1,7 @@
 #include "shell.h"
 #include <stdio.h>
 #include <unistd.h>
-
+#include <stdlib.h>
 void print_prompt();
 
 /**
@@ -18,14 +18,20 @@ int start_shell()
 	while (1)
 	{
 		print_prompt();
-		if (getline(&input, &input_buff_size, stdin) < 0)
-			return (-1); /* overflow error or NULL linep/linecapp */
+		if (getline(&input, &input_buff_size, stdin) < 0 || input[0] == '\n')
+		{
+			if (input)
+				free(input); /* input still got malloced */
+			continue; /* ask for input again */
+		}
 		com_q = parse_string(input);
 		if (!com_q)
 			return (-1); /* failed to create list of commands */
 		if (execute_commands(com_q) < 0)
 			return (-1); /* failed to execute commands */
 		free_command_queue(com_q);
+		if (input)
+			free(input);
 	}
 
 	return (0);

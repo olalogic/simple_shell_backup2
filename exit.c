@@ -2,14 +2,14 @@
 #include <stdlib.h>
 
 /**
- * exit - Frees the queue and return exit code
+ * exit_shell - Frees the queue and return exit code
  *
  * @q: Pointer to the queue
  *
  * Return: See macro values
  */
 
-void exit(queue_t *q)
+void exit_shell(queue_t *q)
 {
 	if (!q)
 		return (EXIT_FAILURE);

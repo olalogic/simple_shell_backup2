@@ -43,6 +43,7 @@ void free_command_queue(queue_t *q)
 		temp = temp->next;
 	}
 	q->front = q->rear = NULL;
+	free(q);
 }
 
 /**
