@@ -53,4 +53,6 @@ int enqueue(queue_t *q, char separator, char **command);
 command_t *dequeue(queue_t *q);
 void print_queue(queue_t *q);
 void exit_shell(queue_t *q, int status);
+void signal_handler(int sig_no);
+
 #endif /* _SHELL_H_ */
