@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-void print_prompt(void);
 
 /**
  * start_shell - starts our loop looking for user's commands
