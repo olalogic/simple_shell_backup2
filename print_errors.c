@@ -9,7 +9,7 @@
  */
 void print_no_file_error(void)
 {
-	write(STDOUT_FILENO, "No such file or directory\n", 26);
+	write(STDOUT_FILENO, "\nNo such file or directory\n", 27);
 }
 
 /**
