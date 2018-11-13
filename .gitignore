@@ -9,7 +9,6 @@ ApplicationSettings.cs
 [Bb]in/
 packages/
 TestResults/
-test/
 
 # globs
 Makefile.in
