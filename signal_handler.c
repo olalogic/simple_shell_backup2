@@ -11,7 +11,7 @@ void signal_handler(int sig_no);
  */
 int register_signal_handlers(void)
 {
-	if (signal(SIGINT, signal_handler == SIG_ERR))
+	if (signal(SIGINT, signal_handler) == SIG_ERR)
 	{
 		print_signal_reg_error();
 		return (-1);
@@ -31,5 +31,8 @@ int register_signal_handlers(void)
 void signal_handler(int sig_no)
 {
 	if (sig_no == SIGINT)
+	{
 		print_no_file_error();
+		print_prompt();
+	}
 }
