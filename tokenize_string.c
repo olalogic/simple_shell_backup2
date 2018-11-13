@@ -1,5 +1,8 @@
 #include <stdlib.h>
 #include "shell.h"
+
+char DELIMS[6] = { ' ', '\t', '\a', '\r', '\n', '\0' };
+
 int get_word_length(char *str);
 int is_delim(char ch, char *delims);
 int get_word_count(char *str);
@@ -21,6 +24,8 @@ char **strtow(char *str)
 	if (str == NULL || !*str)
 		return (NULL);
 	wc = get_word_count(str);
+
+
 	if (wc == 0)
 		return (NULL);
 	words = malloc((wc + 1) * sizeof(char *));
@@ -29,8 +34,10 @@ char **strtow(char *str)
 	while (i < wc)
 	{
 		wordLen = get_word_length(str);
-		if (is_delim(str[i], DELIMS))
+		if (is_delim(*str, DELIMS))
+		{
 			str = get_next_word(str);
+		}
 		words[i] = malloc((wordLen + 1) * sizeof(char));
 		if (words[i] == NULL)
 		{
@@ -74,7 +81,6 @@ int is_delim(char ch, char *delims)
 	{
 		if (delims[i] == ch)
 			return (1);
-
 		i++;
 	}
 	return (0);

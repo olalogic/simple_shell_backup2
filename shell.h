@@ -1,7 +1,6 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
-#define DELIMS " \r\t\n\a"
 
 /**
  * struct command_s - Structure of each node

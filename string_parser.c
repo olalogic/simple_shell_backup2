@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stdlib.h>
+
 #define LOGIC_DELIMS "&|;"
 
 int is_logic(char *token);
@@ -116,6 +117,7 @@ char **get_command_tokens(char **raw_tokens, int beg_ind, int end_ind)
 	com_tokens = malloc(sizeof(char *) * (((end_ind + 1) - beg_ind) + 1));
 	if (!com_tokens)
 		return (NULL);
+
 	while (beg_ind <= end_ind)
 	{
 		word_len = 0;
@@ -140,6 +142,8 @@ char **get_command_tokens(char **raw_tokens, int beg_ind, int end_ind)
 			com_tokens[com_ind][ctrl_ctr] = raw_tokens[beg_ind][ctrl_ctr];
 			ctrl_ctr++;
 		}
+		raw_tokens[beg_ind][ctrl_ctr] = '\0';
+		beg_ind++;
 	}
 	com_tokens[com_ind] = NULL; /* NULL terminate the array */
 	return (com_tokens);
