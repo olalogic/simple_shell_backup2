@@ -1,4 +1,6 @@
 #include "shell.h"
+#include <stdlib.h>
+
 /**
  * create_command - creates space for command structure containing data passed
  * @command: array of pointers to tokens used in command including command

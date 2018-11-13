@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdlib.h>
 #define LOGIC_DELIMS "&|;"
 
 int is_logic(char *token);
@@ -14,7 +15,7 @@ char **get_command_tokens(char **raw_tokens, int beg_ind, int end_ind);
 queue_t *parse_string(char *str)
 {
 	char **raw_tokens, **sub_tokens;
-	int beg_ind = tok_ind = 0, end_ind = sep_ind = -1;
+	int beg_ind = 0, tok_ind = 0, end_ind = -1, sep_ind = -1;
 
 	queue_t *q = NULL;
 	

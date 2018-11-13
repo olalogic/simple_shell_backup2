@@ -1,4 +1,6 @@
 #include "shell.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
  * create_queue - Creates the queue of nodes
