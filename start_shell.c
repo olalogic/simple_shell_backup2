@@ -22,9 +22,7 @@ int start_shell(void)
 	while (1)
 	{
 		print_prompt();
-		printf("trying to alloc input line\n");
 		bytes_read = getline(&input, &input_buff_size, stdin);
-		printf("succeded in alloc\n");
 		if (bytes_read < 0 || input[0] == '\n')
 		{
 			if (bytes_read < 0)
