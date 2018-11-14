@@ -1,0 +1,48 @@
+.TH SimpleShell 1 "November 2018" "1.0" "Holberton SimpleShell Manual"
+
+
+.SH NAME
+cshell \- Simple UNIX shell that handles multiple commands
+
+
+.SH SYNOPSIS
+.B ./cshell
+.I Handles pipes and multiple arguments
+Holberton School Trimester 1 Capstone
+
+
+.SH DESCRIPTION
+
+
+cshell is a watered down version of Ken Thompson's first UNIX shell. It is specifically designed for UNIX environments. This version handles some advanced features such as piping and options (some of them).
+
+
+.SH INVOCATION
+.br
+.\&
+.RS
+\&> ./cshell
+
+The prompt '> ' will appear on terminal. You enter commands following the prompt. You can handle multiple commands using ';' '&&' '||' specifiers. Once you have entered the commands you execute the commands by pressing 'ENTER' or 'RETURN' on your keyboard.
+
+
+.SH FEATURES
+
+
+
+.SH BUILTINS
+The following are supported by cshell
+.br
+.br
+
+
+.SH BUGS
+No known bugs at this time. See status widget in the repositories README for updates though. If you spot a bug please feel free to create an issue or contact the AUTHORS via email.
+
+
+.SH "SEE ALSO"
+.SH sh
+
+
+.SH "AUTHORS"
+Connor Brereton and Bennett Dixon
