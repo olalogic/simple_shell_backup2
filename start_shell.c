@@ -12,6 +12,7 @@ int start_shell(void)
 {
 	char *input = NULL;
 	size_t input_buff_size = 0;
+	ssize_t bytes_read = 0;
 	queue_t *com_q = NULL;
 
 	/* register our signal handlers with kernal for things like SIGINT */
@@ -21,8 +22,13 @@ int start_shell(void)
 	while (1)
 	{
 		print_prompt();
-		if (getline(&input, &input_buff_size, stdin) < 0 || input[0] == '\n')
+		printf("trying to alloc input line\n");
+		bytes_read = getline(&input, &input_buff_size, stdin);
+		printf("succeded in alloc\n");
+		if (bytes_read < 0 || input[0] == '\n')
 		{
+			if (bytes_read < 0)
+				write(STDOUT_FILENO, "\n", 1);
 			if (input)
 			{
 				free(input); /* input still got malloced */
@@ -33,14 +39,16 @@ int start_shell(void)
 		com_q = parse_string(input);
 		if (!com_q)
 			return (-1); /* failed to create list of commands */
-		if (execute_commands(com_q) < 0)
-			return (-1); /* failed to execute commands */
-		free_command_queue(com_q);
+
 		if (input)
 		{
 			free(input);
 			input = NULL;
 		}
+
+		if (execute_commands(com_q) < 0)
+			return (-1); /* failed to execute commands */
+		free_command_queue(com_q);
 	}
 
 	return (0);
