@@ -13,10 +13,11 @@
 int can_execute(command_t *command);
 int is_custom_command(char *token);
 int execute_normal_command(command_t *command, char *envp[]);
-int execute_custom_command(command_t *command, char *envp[], int command_i);
+int execute_custom_command(command_t *command, char *envp[], queue_t *q);
 /**
  * execute_commands - executes a queue of commands in FIFO order
  * @command_q: the queue of commands to execute
+ * @envp: double pointer to the tokens
  *
  * Return: 1 (success) 0 (failure).
  */
@@ -33,7 +34,7 @@ int execute_commands(queue_t *command_q, char *envp[])
 	while (cur_node)
 	{
 		run_com = can_execute(cur_node);
-		
+
 		if (run_com) /* run the command */
 		{
 			is_custom_com = is_custom_command(cur_node->command[0]);
@@ -45,8 +46,8 @@ int execute_commands(queue_t *command_q, char *envp[])
 		/* set validity of next->prev_valid based on result */
 		if (cur_node->next)
 			cur_node->next->prev_valid = (run_com == 0) ? 1 : 0;
-		
-		/* since we dequeued, free cur_node */		
+
+		/* since we dequeued, free cur_node */
 		free_command(cur_node);
 		/* advance loop by grabbing next node from queue */
 		cur_node = dequeue(command_q);
@@ -56,7 +57,7 @@ int execute_commands(queue_t *command_q, char *envp[])
 
 /**
  * can_execute - gets whether or not a command should execute
- * command: command_t pointer that contains command to check executability of
+ * @command: command_t pointer that contains command to check executability of
  *
  * Return: 1 (can execute) 0 (can't execute)
  */
@@ -92,7 +93,7 @@ int can_execute(command_t *command)
  */
 int is_custom_command(char *token)
 {
-	char *customs[] = { "exit", "env", "setenv", "unsetenv", "cd", "help"
+	char *customs[] = { "exit", "env", "setenv", "unsetenv", "cd", "help",
 			"history", NULL };
 	int custom_i = 0, j = 0;
 
@@ -117,22 +118,49 @@ int is_custom_command(char *token)
 /**
  * execute_custom_command - executes the custom command in sub process
  * @command: pointer to the command to execute
- *
+ * @q: pointer to the queue
+ * @envp: double pointer to the token
+ * @comm
  * Return: (1) executed successfully, (0) failed execution
  */
-int execute_custom_command(command_t *command, char *envp[], int command_i)
+int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 {
-	
-	(void)envp;
-	if (command_i < 0 || !command)
+	char *cmd_tok;
+
+	int check_fnc = 0;
+
+	if (!command)
 		return (0);
-	
+	cmd_tok = command->command[0];
+
+	switch (cmd_tok[0])
+	{
+	case 'e':
+		switch (cmd_tok[1])
+		{
+		case 'x': /* check exit */
+			exit_shell(q, _atoi(command->command[1]));
+			break;
+
+		case 'n': /* check env */
+			check_fcn = print_env(envp);
+			break;
+
+		default: /* THIS SHOULDNT RUN */
+			print_no_file_error();
+			break;
+		}
+		break;
+	}
+	if (check_fcn < 1)
+		return (0);
+
 	return (1);
 }
 /**
  * execute_normal_command - executes the normal command in sub process
  * @command: pointer to the command to execute
- *
+ * @envp: double pointer to the tokens
  * Return: exit status of executed process (0 on success, error code on fail)
  */
 int execute_normal_command(command_t *command, char *envp[])
