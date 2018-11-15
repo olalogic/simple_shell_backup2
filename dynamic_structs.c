@@ -41,8 +41,7 @@ void free_command_queue(queue_t *q)
 	temp = q->front;
 	while (temp)
 	{
-		free_token_list(temp->command);
-		free(temp);
+		free_command(temp);
 		temp = temp->next;
 	}
 	q->front = q->rear = NULL;
@@ -70,4 +69,19 @@ void free_token_list(char **tokens)
 		i++;
 	}
 	free(tokens);
+}
+
+/**
+ * free_command - frees a command pointer of its token list and itself
+ * @command: command to free
+ *
+ * Return: always void.
+ */
+void free_command(command_t *command)
+{
+	if (command)
+	{
+		free_token_list(command->command);
+		free(command);
+	}
 }
