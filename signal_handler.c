@@ -32,7 +32,7 @@ void signal_handler(int sig_no)
 {
 	if (sig_no == SIGINT)
 	{
-		print_no_file_error();
+		print_newline();
 		print_prompt();
 	}
 }
