@@ -68,6 +68,9 @@ int print_env(char *envp[]);
 void signal_handler(int sig_no);
 int register_signal_handlers(void);
 
+/* custom stdlib */
+int _atoi(char *str);
+
 /* print errors */
 void print_no_file_error(void);
 void print_signal_reg_error(void);
