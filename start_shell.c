@@ -13,6 +13,7 @@ int start_shell(void)
 	char *input = NULL;
 	size_t input_buff_size = 0;
 	ssize_t bytes_read = 0;
+	extern char **environ;
 	queue_t *com_q = NULL;
 
 	/* register our signal handlers with kernal for things like SIGINT */
@@ -44,7 +45,7 @@ int start_shell(void)
 			input = NULL;
 		}
 
-		if (execute_commands(com_q) < 0)
+		if (execute_commands(com_q, environ) < 0)
 			return (-1); /* failed to execute commands */
 		free_command_queue(com_q);
 	}
