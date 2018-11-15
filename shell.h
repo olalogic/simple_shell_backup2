@@ -54,6 +54,7 @@ command_t *create_command(char separator, char **command);
 char **strtow(char *str);
 int is_delim(char ch, char *delims);
 queue_t *create_queue();
+
 /* using our queue */
 int enqueue(queue_t *q, char separator, char **command);
 command_t *dequeue(queue_t *q);
@@ -61,6 +62,7 @@ void print_queue(queue_t *q);
 
 /* custom functions for custom commands */
 void exit_shell(queue_t *q, int status);
+int print_env(char *envp[]);
 
 /* handling signals */
 void signal_handler(int sig_no);
