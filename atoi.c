@@ -12,6 +12,8 @@ int _atoi(char *s)
 	unsigned int total = 0;
 	char working = 0;
 
+	if (!s)
+		return (0);
 	while (*s)
 	{
 		if (*s == '-')

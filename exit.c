@@ -14,7 +14,6 @@ void exit_shell(queue_t *q, int status)
 {
 	if (!q)
 		exit(status);
-
 	free_command_queue(q);
 	exit(status);
 }

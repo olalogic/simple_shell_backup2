@@ -109,7 +109,7 @@ int is_custom_command(char *token)
 				break;
 			j++;
 		}
-		if (token[j] == '\0') /* match */
+		if (customs[custom_i][j] == '\0') /* match */
 			return (custom_i);
 		custom_i++;
 	}
@@ -137,7 +137,6 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 	if (!cmd_tok)
 		return (0);
 
-	printf("execute_custom_command got cmd_tok:%s\n", cmd_tok);
 	switch (cmd_tok[0])
 	{
 	case 'e':
