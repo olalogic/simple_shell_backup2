@@ -19,6 +19,7 @@ int start_shell(void)
 	/* register our signal handlers with kernal for things like SIGINT */
 	if (register_signal_handlers() < 0)
 		return (-1);
+
 	/* loop through and get user input */
 	while (1)
 	{
@@ -26,15 +27,16 @@ int start_shell(void)
 		bytes_read = getline(&input, &input_buff_size, stdin);
 		if (bytes_read < 0 || input[0] == '\n')
 		{
-			if (bytes_read < 0)
-				write(STDOUT_FILENO, "\n", 1);
 			if (input)
 			{
 				free(input); /* input still got malloced */
 				input = NULL;
 			}
-			continue; /* ask for input again */
+			print_newline();
+			fflush(stdin);
+			return (0); /* EOF received, exit shell */
 		}
+		fflush(stdin);
 		com_q = parse_string(input);
 		if (!com_q)
 			return (-1); /* failed to create list of commands */
