@@ -70,5 +70,6 @@ int register_signal_handlers(void);
 void print_no_file_error(void);
 void print_signal_reg_error(void);
 void print_prompt(void);
+void print_newline(void);
 
 #endif /* _SHELL_H_ */

@@ -2,8 +2,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
-#include <stdio.h>
+#include <stdlib.h>
 
 /* switch variables for seperators */
 #define NO_SEPARATOR '\0'
@@ -149,7 +148,7 @@ int execute_normal_command(command_t *command, char *envp[])
 	{
 		execve(command->command[0], command->command, envp);
 		/* child process should exit on success so this shouldn't run */
-		return (0);
+		exit(98); /* process failed to execute, return 98 to parent */
 	}
 	else /* parent */
 	{
