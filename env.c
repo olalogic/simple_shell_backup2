@@ -49,6 +49,7 @@ int print_env(char *envp[])
 	}
 
 	check_write = write(STDOUT_FILENO, buffer, char_ctr);
+	free(buffer);
 	if (check_write < 0)
 		return (0);
 

@@ -1,6 +1,10 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+/* delimeter macros */
+#define NORM_DELIMS " \t\a\r\n"
+#define PATH_DELIMS ":"
+
 /**
  * struct command_s - Structure of each node
  *
@@ -51,7 +55,7 @@ void free_command(command_t *command);
 
 /* build the queue of commands */
 command_t *create_command(char separator, char **command);
-char **strtow(char *str);
+char **strtow(char *str, char *delims);
 int is_delim(char ch, char *delims);
 queue_t *create_queue();
 

@@ -1,12 +1,10 @@
 #include <stdlib.h>
 #include "shell.h"
 
-char DELIMS[6] = { ' ', '\t', '\a', '\r', '\n', '\0' };
-
-int get_word_length(char *str);
+int get_word_length(char *str, char *delims);
 int is_delim(char ch, char *delims);
-int get_word_count(char *str);
-char *get_next_word(char *str);
+int get_word_count(char *str, char *delims);
+char *get_next_word(char *str, char *delims);
 
 /**
  * strtow - takes a string and seperates its words
@@ -16,14 +14,14 @@ char *get_next_word(char *str);
  * Return: 2D array of pointers to each word
  */
 
-char **strtow(char *str)
+char **strtow(char *str, char *delims)
 {
 	char **words;
 	int wc, wordLen, n, i = 0;
 
 	if (str == NULL || !*str)
 		return (NULL);
-	wc = get_word_count(str);
+	wc = get_word_count(str, delims);
 
 
 	if (wc == 0)
@@ -33,10 +31,10 @@ char **strtow(char *str)
 		return (NULL);
 	while (i < wc)
 	{
-		wordLen = get_word_length(str);
-		if (is_delim(*str, DELIMS))
+		wordLen = get_word_length(str, delims);
+		if (is_delim(*str, delims))
 		{
-			str = get_next_word(str);
+			str = get_next_word(str, delims);
 		}
 		words[i] = malloc((wordLen + 1) * sizeof(char));
 		if (words[i] == NULL)
@@ -56,7 +54,7 @@ char **strtow(char *str)
 			n++;
 		}
 		words[i][n] = '\0'; /* set end of str */
-		str = get_next_word(str);
+		str = get_next_word(str, delims);
 		i++;
 	}
 	words[i] = NULL; /* last element is null for iteration */
@@ -94,19 +92,19 @@ int is_delim(char ch, char *delims)
  * Return: word length of current word
  */
 
-int get_word_length(char *str)
+int get_word_length(char *str, char *delims)
 {
 	int wLen = 0, pending = 1, i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim(str[i], DELIMS))
+		if (is_delim(str[i], delims))
 			pending = 1;
 		else if (pending)
 		{
 			wLen++;
 		}
-		if (wLen > 0 && is_delim(str[i], DELIMS))
+		if (wLen > 0 && is_delim(str[i], delims))
 			break;
 		i++;
 	}
@@ -121,13 +119,13 @@ int get_word_length(char *str)
  * Return: the word count of the string
  */
 
-int get_word_count(char *str)
+int get_word_count(char *str, char *delims)
 {
 	int wc = 0, pending = 1, i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim(str[i], DELIMS))
+		if (is_delim(str[i], delims))
 			pending = 1;
 		else if (pending)
 		{
@@ -147,14 +145,14 @@ int get_word_count(char *str)
  * Return: pointer to first char of next word
  */
 
-char *get_next_word(char *str)
+char *get_next_word(char *str, char *delims)
 {
 	int pending = 0;
 	int i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim(str[i], DELIMS))
+		if (is_delim(str[i], delims))
 			pending = 1;
 		else if (pending)
 			break;
