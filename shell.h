@@ -39,18 +39,27 @@ typedef struct queue_s
 	command_t *front, *rear;
 } queue_t;
 
+/* main functionality */
 int start_shell(void);
 queue_t *parse_string(char *input_str);
-int execute_commands(queue_t *command_q);
+int execute_commands(queue_t *command_q, char *envp[]);
+
+/* free memory */
 void free_token_list(char **tokens);
 void free_command_queue(queue_t *command_q);
+void free_command(command_t *command);
+
+/* build the queue of commands */
 command_t *create_command(char separator, char **command);
 char **strtow(char *str);
 int is_delim(char ch, char *delims);
 queue_t *create_queue();
+/* using our queue */
 int enqueue(queue_t *q, char separator, char **command);
 command_t *dequeue(queue_t *q);
 void print_queue(queue_t *q);
+
+/* custom functions for custom commands */
 void exit_shell(queue_t *q, int status);
 
 /* handling signals */
