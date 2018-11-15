@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /* switch variables for seperators */
 #define NO_SEPARATOR '\0'
@@ -39,7 +40,7 @@ int execute_commands(queue_t *command_q, char *envp[])
 		{
 			is_custom_com = is_custom_command(cur_node->command[0]);
 			if (is_custom_com >= 0)
-				run_com = execute_custom_command(cur_node, envp, is_custom_com);
+				run_com = execute_custom_command(cur_node, envp, command_q);
 			else
 				run_com = execute_normal_command(cur_node, envp);
 		}
@@ -133,6 +134,10 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 		return (0);
 	cmd_tok = command->command[0];
 
+	if (!cmd_tok)
+		return (0);
+
+	printf("execute_custom_command got cmd_tok:%s\n", cmd_tok);
 	switch (cmd_tok[0])
 	{
 	case 'e':
@@ -143,7 +148,7 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 			break;
 
 		case 'n': /* check env */
-			check_fcn = print_env(envp);
+			check_fnc = print_env(envp);
 			break;
 
 		default: /* THIS SHOULDNT RUN */
@@ -152,7 +157,7 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 		}
 		break;
 	}
-	if (check_fcn < 1)
+	if (check_fnc < 1)
 		return (0);
 
 	return (1);

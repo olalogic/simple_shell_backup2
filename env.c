@@ -26,7 +26,6 @@ int print_env(char *envp[])
 	while (envp[i])
 	{
 		j = 0;
-
 		while (envp[i][j])
 			j++;
 
@@ -38,13 +37,14 @@ int print_env(char *envp[])
 	if (!buffer)
 		return (0);
 
+	i = 0;
 	while (envp[i])
 	{
 		j = 0;
 		while (envp[i][j])
 			buffer[buf_ind++] = envp[i][j++];
 
-		buffer[buf_ind] = '\n';
+		buffer[buf_ind++] = '\n';
 		i++;
 	}
 
