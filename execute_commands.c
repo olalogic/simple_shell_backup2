@@ -157,5 +157,5 @@ int execute_normal_command(command_t *command, char *envp[])
 			return (0);
 		return (process_status);
 	}
-	return (1); /* successfully forked and executed process */
+	return (98); /* should not hit this return ever, failure if it does */
 }
