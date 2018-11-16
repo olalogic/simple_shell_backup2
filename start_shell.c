@@ -15,10 +15,16 @@ int start_shell(void)
 	ssize_t bytes_read = 0;
 	extern char **environ;
 	queue_t *com_q = NULL;
+	his_q_t *his_q = NULL;
 
 	/* register our signal handlers with kernal for things like SIGINT */
 	if (register_signal_handlers() < 0)
 		return (-1);
+
+	/* get history from file and build queue */
+	his_q = get_history();
+	if (!his_q)
+		return (-1); /* failed to create history queue */
 
 	/* loop through and get user input */
 	while (1)
@@ -47,11 +53,12 @@ int start_shell(void)
 
 		if (input)
 		{
+			h_enqueue(his_q, input); /* add command to history */
 			free(input);
 			input = NULL;
 		}
 
-		if (execute_commands(com_q, environ) < 0)
+		if (execute_commands(his_q, com_q, environ) < 0)
 			return (-1); /* failed to execute commands */
 		free_command_queue(com_q);
 	}

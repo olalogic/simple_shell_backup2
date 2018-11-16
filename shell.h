@@ -80,7 +80,7 @@ typedef struct his_q_s
 /* main functionality */
 int start_shell(void);
 queue_t *parse_string(char *input_str);
-int execute_commands(queue_t *command_q, char *envp[]);
+int execute_commands(his_q_t *his_q, queue_t *command_q, char *envp[]);
 char *get_file_path(char *filename, char *envp[]);
 
 /* free memory */
@@ -105,13 +105,14 @@ void free_history_node(history_t *node);
 void free_history_queue(his_q_t *q);
 
 /* history enqueue/dequeue */
+his_q_t *get_history();
 his_q_t *create_h_queue();
 int h_enqueue(his_q_t *q, char *command);
 history_t *h_dequeue(his_q_t *q);
 void print_h_queue(his_q_t *q);
 
 /* custom functions for custom commands */
-void exit_shell(queue_t *q, int status);
+void exit_shell(his_q_t *his_q, queue_t *q, int status);
 int print_env(char *envp[]);
 
 /* handling signals */
