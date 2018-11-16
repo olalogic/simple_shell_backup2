@@ -3,6 +3,18 @@
 #include <stdio.h>
 
 /**
+ * get_history - checks if there is a history file present, pulls from that
+ * or creates a new queue if no file is found.
+ *
+ * Return: pointer to new queue in memory
+ */
+his_q_t *get_history()
+{
+	/* check if history file exists, if it does read / build q from it */
+	/* else */
+	return (create_h_queue());
+}
+/**
  * create_h_queue - Creates the queue of nodes
  *
  * Return: Address of node
