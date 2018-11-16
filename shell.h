@@ -74,7 +74,7 @@ typedef struct history_s
 
 typedef struct his_q_s
 {
-        his_t *front, *rear;
+        history_t *front, *rear;
 } his_q_t;
 
 /* main functionality */
@@ -102,6 +102,7 @@ void print_queue(queue_t *q);
 /* history queue */
 history_t *create_history_t(char *command, int set_p_no);
 void free_history_node(history_t *node);
+void free_history_queue(his_q_t *q);
 
 /* history enqueue/dequeue */
 his_q_t *create_h_queue();
