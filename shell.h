@@ -74,6 +74,7 @@ int register_signal_handlers(void);
 
 /* custom stdlib */
 int _atoi(char *str);
+int _strlen(char *str);
 
 /* print errors */
 void print_no_file_error(void);

@@ -25,9 +25,7 @@ int print_env(char *envp[])
 
 	while (envp[i])
 	{
-		j = 0;
-		while (envp[i][j])
-			j++;
+		j = _strlen(envp[i]);
 
 		char_ctr += j + 1;
 		i++;

@@ -34,3 +34,18 @@ int _atoi(char *s)
 		total = (-(total));
 	return (total);
 }
+
+/**
+ * _strlen - gets the length of a null byte terminated string
+ * @str: string to check length of
+ *
+ * Return: length of string
+ */
+int _strlen(char *str)
+{
+	int len = 0;
+
+	while (str[len])
+		len++;
+	return (len);
+}
