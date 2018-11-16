@@ -43,6 +43,26 @@ typedef struct queue_s
 	command_t *front, *rear;
 } queue_t;
 
+/**
+ * struct history_s - Structure of history queue
+ *
+ * @command: Holds the command from getline()
+ *
+ * @priority_number: Holds the number coorelated
+ * to the command input order
+ *
+ * @next: Pointer to the next node
+ *
+ */
+
+typedef struct history_s
+{
+	char *command;
+
+	int priority_number;
+	struct history_s *next;
+} history_t;
+
 /* main functionality */
 int start_shell(void);
 queue_t *parse_string(char *input_str);
@@ -64,6 +84,10 @@ queue_t *create_queue();
 int enqueue(queue_t *q, char separator, char **command);
 command_t *dequeue(queue_t *q);
 void print_queue(queue_t *q);
+
+/* history queue */
+history_t *create_history_t(char *command, int set_p_no);
+void free_history_node(history_t *node);
 
 /* custom functions for custom commands */
 void exit_shell(queue_t *q, int status);
