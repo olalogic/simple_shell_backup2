@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <sys.stat.h>
+#include <sys/stat.h>
 #include <fcntl.h>
 
 int is_path_env(char *token);
@@ -56,8 +56,8 @@ char *get_file_path(char *filename, char **envp)
 char *get_correct_path(char *filename, char **paths)
 {
 	char *new_tok = NULL;
-	int fname_len = cur_tok_len = new_tok_len = 0;
-	int tok_i = new_tok_i = fn_i = path_i = 0;
+	int fname_len = 0, cur_tok_len = 0, new_tok_len = 0;
+	int tok_i = 0, new_tok_i = 0, fn_i = 0, path_i = 0;
 	int is_file = 0;
 
 	fname_len = _strlen(filename);
@@ -74,7 +74,7 @@ char *get_correct_path(char *filename, char **paths)
 		{
 			/* copy path in */
 			if (new_tok_i < cur_tok_len)
-				new_tok[new_tok_i] = paths[path_i++];
+				new_tok[new_tok_i] = paths[tok_i][path_i++];
 			else if (new_tok_i == cur_tok_len)
 				new_tok[new_tok_i] = '/';
 			else /* copy file name in */
@@ -109,7 +109,7 @@ int test_path(char *path_with_file)
 {
 	int open_resp = 0;
 
-	open_resp = open(path_with_file, O_PATH);
+	open_resp = open(path_with_file, O_RDONLY);
 	if (open_resp < 0)
 		return (0);
 	if (close(open_resp) < 0)
@@ -125,8 +125,8 @@ int test_path(char *path_with_file)
  */
 int is_path_env(char *token)
 {
-	int tok_i = path_i = 0;
-	char *path = "PATH="
+	int tok_i = 0, path_i = 0;
+	char *path = "PATH=";
 
 	if (!token)
 		return (0);
