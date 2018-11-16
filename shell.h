@@ -1,6 +1,10 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+/* delimeter macros */
+#define NORM_DELIMS " \t\a\r\n"
+#define PATH_DELIMS ":"
+
 /**
  * struct command_s - Structure of each node
  *
@@ -51,9 +55,10 @@ void free_command(command_t *command);
 
 /* build the queue of commands */
 command_t *create_command(char separator, char **command);
-char **strtow(char *str);
+char **strtow(char *str, char *delims);
 int is_delim(char ch, char *delims);
 queue_t *create_queue();
+
 /* using our queue */
 int enqueue(queue_t *q, char separator, char **command);
 command_t *dequeue(queue_t *q);
@@ -61,10 +66,14 @@ void print_queue(queue_t *q);
 
 /* custom functions for custom commands */
 void exit_shell(queue_t *q, int status);
+int print_env(char *envp[]);
 
 /* handling signals */
 void signal_handler(int sig_no);
 int register_signal_handlers(void);
+
+/* custom stdlib */
+int _atoi(char *str);
 
 /* print errors */
 void print_no_file_error(void);
