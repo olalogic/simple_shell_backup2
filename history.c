@@ -63,6 +63,34 @@ void free_history_node(history_t *node)
 		return;
 
 	if (node->command)
-		free(node->commmand);
+		free(node->command);
 	free(node);
+}
+
+/**
+ * free_history_node - Frees node in history queue
+ *
+ * @node: Pointer to node
+ *
+ * Return: none
+ */
+
+void free_history_queue(his_q_t *q)
+{
+	history_t *temp = NULL;
+
+	if (!q)
+		return;
+	printf("freeing the history queue...");
+
+	temp = q->front;
+	while (temp)
+	{
+		free_history_node(temp);
+		temp = temp->next;
+	}
+
+	q->front = q->rear = NULL;
+	free(q);
+	printf("history queue successfully freed...\n");
 }
