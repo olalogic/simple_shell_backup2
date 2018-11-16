@@ -14,7 +14,7 @@
 int can_execute(command_t *command);
 int is_custom_command(char *token);
 int execute_normal_command(command_t *command, char *envp[]);
-int execute_custom_command(command_t *command, char *envp[], queue_t *q);
+int execute_custom_command(command_t *, char **, his_q_t *, queue_t *);
 /**
  * execute_commands - executes a queue of commands in FIFO order
  * @command_q: the queue of commands to execute
@@ -22,7 +22,7 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q);
  *
  * Return: 1 (success) 0 (failure).
  */
-int execute_commands(queue_t *command_q, char *envp[])
+int execute_commands(his_q_t *his_q, queue_t *command_q, char *envp[])
 {
 	command_t *cur_node = NULL;
 	int run_com = 0;
@@ -40,7 +40,7 @@ int execute_commands(queue_t *command_q, char *envp[])
 		{
 			is_custom_com = is_custom_command(cur_node->command[0]);
 			if (is_custom_com >= 0)
-				run_com = execute_custom_command(cur_node, envp, command_q);
+				run_com = execute_custom_command(cur_node, envp, his_q, command_q);
 			else
 				run_com = execute_normal_command(cur_node, envp);
 		}
@@ -124,7 +124,8 @@ int is_custom_command(char *token)
  * @comm
  * Return: (1) executed successfully, (0) failed execution
  */
-int execute_custom_command(command_t *command, char *envp[], queue_t *q)
+int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
+				queue_t *q)
 {
 	char *cmd_tok;
 
@@ -144,7 +145,7 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 		{
 		case 'x': /* check exit */
 			free_command(command);
-			exit_shell(q, _atoi(command->command[1]));
+			exit_shell(his_q, q, _atoi(command->command[1]));
 			break;
 
 		case 'n': /* check env */
