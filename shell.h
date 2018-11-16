@@ -47,6 +47,7 @@ typedef struct queue_s
 int start_shell(void);
 queue_t *parse_string(char *input_str);
 int execute_commands(queue_t *command_q, char *envp[]);
+char *get_file_path(char *filename, char *envp[]);
 
 /* free memory */
 void free_token_list(char **tokens);
