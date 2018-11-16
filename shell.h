@@ -63,6 +63,20 @@ typedef struct history_s
 	struct history_s *next;
 } history_t;
 
+/**
+ * struct his_q_t - Structure of queue
+ *
+ * @front: Pointer to the first node
+ *
+ * @rear: Pointer to the front+1 node
+ *
+ */
+
+typedef struct his_q_s
+{
+        his_t *front, *rear;
+} his_q_t;
+
 /* main functionality */
 int start_shell(void);
 queue_t *parse_string(char *input_str);
@@ -88,6 +102,12 @@ void print_queue(queue_t *q);
 /* history queue */
 history_t *create_history_t(char *command, int set_p_no);
 void free_history_node(history_t *node);
+
+/* history enqueue/dequeue */
+his_q_t *create_h_queue();
+int h_enqueue(his_q_t *q, char *command);
+history_t *h_dequeue(his_q_t *q);
+void print_h_queue(his_q_t *q);
 
 /* custom functions for custom commands */
 void exit_shell(queue_t *q, int status);
