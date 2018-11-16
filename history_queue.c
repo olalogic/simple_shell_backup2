@@ -103,7 +103,7 @@ void print_h_queue(his_q_t *q)
 	while (temp)
 	{
 		printf("%d\n", temp->priority_number);
-		printf("%c\n", temp->command);
+		printf("%s\n", temp->command);
 		temp = temp->next;
 		printf("\nENDOFHISTORY\n");
 	}
