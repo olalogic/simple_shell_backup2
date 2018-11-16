@@ -1,4 +1,3 @@
-#include "holberton.h"
 #include <stdlib.h>
 
 unsigned int _abs(int);
