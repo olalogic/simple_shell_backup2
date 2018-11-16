@@ -32,9 +32,13 @@ int start_shell(void)
 				free(input); /* input still got malloced */
 				input = NULL;
 			}
-			print_newline();
-			fflush(stdin);
-			return (0); /* EOF received, exit shell */
+			if (bytes_read < 0)
+			{
+				print_newline();
+				fflush(stdin);
+				return (0); /* EOF received, exit shell */
+			}
+			continue;
 		}
 		fflush(stdin);
 		com_q = parse_string(input);
