@@ -174,20 +174,28 @@ int execute_normal_command(command_t *command, char *envp[])
 	int process_status = 0;
 	int wait_err = 0;
 
+	char *file_w_path = NULL;
+
+	
+	file_w_path = get_file_path(command->command[0], envp);
+	if (!file_w_path)
+		return (98);
 	pid = fork();
 	if (pid < 0) /* fork failure, too many processes open */
-		return (0);
+		return (98);
 	else if (pid == 0) /* child process */
 	{
-		execve(command->command[0], command->command, envp);
+
+		execve(file_w_path, command->command, envp);
 		/* child process should exit on success so this shouldn't run */
 		exit(98); /* process failed to execute, return 98 to parent */
 	}
 	else /* parent */
 	{
 		wait_err = waitpid(pid, &process_status, 0);
+		free(file_w_path);
 		if (wait_err < 0)
-			return (0);
+			return (98);
 		return (process_status);
 	}
 	return (98); /* should not hit this return ever, failure if it does */
