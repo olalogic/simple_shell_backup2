@@ -22,6 +22,8 @@ char *get_file_path(char *filename, char **envp)
 {
 	char **paths = NULL;
 	char *path_env = NULL;
+	char *ret = NULL;
+
 	int i = 0;
 
 	if (!filename || !envp)
@@ -43,7 +45,9 @@ char *get_file_path(char *filename, char **envp)
 	paths = strtow(path_env, PATH_DELIMS);
 	if (!paths)
 		return (NULL);
-	return (get_correct_path(filename, paths));
+	ret = get_correct_path(filename, paths);
+	free_token_list(paths);
+	return (ret);
 }
 
 /**
