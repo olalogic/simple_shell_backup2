@@ -64,8 +64,7 @@ void free_token_list(char **tokens)
 		return;
 	while (tokens[i])
 	{
-		if (tokens[i])
-			free(tokens[i]);
+		free(tokens[i]);
 		i++;
 	}
 	free(tokens);

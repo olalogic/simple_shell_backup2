@@ -27,7 +27,7 @@ queue_t *parse_string(char *str)
 	q = create_queue();
 	if (!q)
 		return (NULL);
-	raw_tokens = strtow(str);
+	raw_tokens = strtow(str, NORM_DELIMS);
 
 	if (!raw_tokens)
 		return (NULL);
