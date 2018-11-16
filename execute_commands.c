@@ -143,6 +143,7 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 		switch (cmd_tok[1])
 		{
 		case 'x': /* check exit */
+			free_command(command);
 			exit_shell(q, _atoi(command->command[1]));
 			break;
 
