@@ -111,6 +111,9 @@ int h_enqueue(his_q_t *q, char *command);
 history_t *h_dequeue(his_q_t *q);
 void write_h_queue(his_q_t *q, int fd);
 
+/* writing/loading history file */
+void write_queue_to_file(his_q_t *q);
+
 /* custom functions for custom commands */
 void exit_shell(his_q_t *his_q, queue_t *q, int status);
 int print_env(char *envp[]);
