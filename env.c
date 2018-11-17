@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int is_name_env(char *token, char *env_name);
+void advance_env(char **env_token);
 /**
  * print_env - Stores and prints the `env`
  *
@@ -52,4 +54,73 @@ int print_env(char *envp[])
 		return (0);
 
 	return (1);
+}
+
+/**
+ * _getenv - gets an environmental variable by name
+ *
+ * @env_name: name of environmental variable to find, e.g: PATH, HOME, USER
+ *
+ * Return: pointer to char after equal sign in env, e.g: PATH= ->/bin:/usr/bin
+ */
+char *_getenv(char *env_name)
+{
+	extern char **environ;
+	char *ret;
+	int i = 0;
+
+	while (*environ[i])
+	{
+		if (is_name_env(environ[i], env_name))
+		{
+			ret = environ[i];
+			break;
+		}
+		i++;
+	}
+	/* advance pointer to after ENV=env_var */
+	/*                              ^       */
+	advance_env(&ret);
+	
+	return (ret);
+}
+/**
+ * is_path_env - checks if a token begins with PATH=
+ * @token: token to check
+ *
+ * Return: (1) is path environmental variables, (0) is not path env
+ */
+int is_name_env(char *token, char *env_name)
+{
+	int tok_i = 0, path_i = 0;
+
+	if (!token)
+		return (0);
+	while (token[tok_i] && env_name[path_i])
+	{
+		if (token[tok_i++] != env_name[path_i++])
+			return (0);
+	}
+	return (1);
+}
+
+/**
+ * advance_env - takes a pointer to environmental variable and advances
+ * to the character beyond the equal sign.
+ *
+ * @path_env - pointer to the pointer to path token
+ *
+ * Return: always void.
+ */
+void advance_env(char **path_env)
+{
+	char *token = NULL;
+
+	if (!path_env)
+		return;
+	token = *path_env;
+	while (*token++ != '=')
+		;
+	token++; /* set to character beyond equal sign */
+	*path_env = token;
 }

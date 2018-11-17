@@ -5,8 +5,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int is_path_env(char *token);
-void advance_path(char **path_env);
 int test_path(char *path_with_file);
 char *get_correct_path(char *filename, char **paths);
 
@@ -24,23 +22,10 @@ char *get_file_path(char *filename, char **envp)
 	char *path_env = NULL;
 	char *ret = NULL;
 
-	int i = 0;
-
 	if (!filename || !envp)
 		return (NULL);
-	/* loop through environemtal variables and find PATH */
-	while (envp[i])
-	{
-		if (is_path_env(envp[i]))
-		{
-			path_env = envp[i];
-			break;
-		}
-		i++;
-	}
-	/* set equal to char beyond PATH=/bin */
-	/*                               ^    */
-	advance_path(&path_env);
+	
+	path_env = _getenv("PATH");
 	/* tokenize paths */
 	paths = strtow(path_env, PATH_DELIMS);
 	if (!paths)
@@ -121,46 +106,4 @@ int test_path(char *path_with_file)
 	if (close(open_resp) < 0)
 		return (-1);
 	return (1);
-}
-
-/**
- * is_path_env - checks if a token begins with PATH=
- * @token: token to check
- *
- * Return: (1) is path environmental variables, (0) is not path env
- */
-int is_path_env(char *token)
-{
-	int tok_i = 0, path_i = 0;
-	char *path = "PATH=";
-
-	if (!token)
-		return (0);
-	while (token[tok_i] && path[path_i])
-	{
-		if (token[tok_i++] != path[path_i++])
-			return (0);
-	}
-	return (1);
-}
-
-/**
- * advance_path - takes a pointer to environmental variable and advances
- * to the character beyond the equal sign.
- *
- * @path_env - pointer to the pointer to path token
- *
- * Return: always void.
- */
-void advance_path(char **path_env)
-{
-	char *token = NULL;
-
-	if (!path_env)
-		return;
-	token = *path_env;
-	while (*token++ != '=')
-		;
-	token++; /* set to character beyond equal sign */
-	*path_env = token;
 }
