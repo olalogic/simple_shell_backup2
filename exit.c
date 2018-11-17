@@ -12,9 +12,6 @@
 
 void exit_shell(his_q_t *his_q, queue_t *q, int status)
 {
-	/* DEBUG ONLY, REMOVE */
-	print_h_queue(his_q);
-
 	free_command_queue(q);
 	free_history_queue(his_q);
 	exit(status);

@@ -162,7 +162,7 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 		switch (cmd_tok[1])
 		{
 		case 'i': /* checks history */
-			print_h_queue();
+			write_h_queue(his_q, STDOUT_FILENO);
 			break;
 		}
 		break;

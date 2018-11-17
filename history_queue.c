@@ -1,6 +1,7 @@
 #include "shell.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 /**
  * get_history - checks if there is a history file present, pulls from that
@@ -106,12 +107,12 @@ history_t *h_dequeue(his_q_t *q)
 
 void write_h_queue(his_q_t *q, int fd)
 {
-	int s_command = 0, s_number = 0, check_write = 0, total = 0, i, j, k;
+	int s_command = 0, s_number = 0, err = 0, total = 0, i, j, k, s_i = 0;
 	char *priority_n_s = NULL, *node_buffer = NULL;
 	history_t *temp = NULL;
 
 	if (!q)
-		printf("NO HISTORY");
+		return;
 	temp = q->front;
 	while (temp)
 	{
@@ -121,7 +122,7 @@ void write_h_queue(his_q_t *q, int fd)
 		s_number = _strlen(priority_n_s);
 		s_command = _strlen(temp->command);
 		total = s_number + s_command + 5;
-		str_index = s_number + 3;
+		s_i = s_number + 3;
 		node_buffer = malloc(sizeof(char) * total);
 		if (!node_buffer)
 			return;
@@ -132,16 +133,18 @@ void write_h_queue(his_q_t *q, int fd)
 				node_buffer[i] = '\t';
 			else if (i < s_number + 1)
 				node_buffer[i] = priority_n_s[j++];
-			else if (i < str_index)
+			else if (i < s_i)
+				node_buffer[i] = ' ';
+			else if (i < total - 1)
 				node_buffer[i] = temp->command[k++];
 			else
 				node_buffer[i] = '\n';
 			i++;
 		}
 		node_buffer[i] = '\0';
-		free(priority_n_s);
-		check_write = write(fd, node_buffer, total);
-		if (check_write < 0)
+		free(priority_n_s);         /* total - 1: forget \0 */
+		err = write(fd, node_buffer, total - 1);
+		if (err < 0)
 			return;
 		free(node_buffer);
 		temp = temp->next;
