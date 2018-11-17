@@ -109,7 +109,7 @@ his_q_t *get_history();
 his_q_t *create_h_queue();
 int h_enqueue(his_q_t *q, char *command);
 history_t *h_dequeue(his_q_t *q);
-void print_h_queue(his_q_t *q);
+void write_h_queue(his_q_t *q, int fd);
 
 /* custom functions for custom commands */
 void exit_shell(his_q_t *his_q, queue_t *q, int status);
@@ -122,6 +122,7 @@ int register_signal_handlers(void);
 /* custom stdlib */
 int _atoi(char *str);
 int _strlen(char *str);
+char *get_int(int num);
 
 /* print errors */
 void print_no_file_error(void);

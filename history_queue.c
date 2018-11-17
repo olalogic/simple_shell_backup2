@@ -57,7 +57,6 @@ int h_enqueue(his_q_t *q, char *command)
 
 	if (!q->rear)
 	{
-		
 		q->front = new_node;
 		q->rear = new_node;
 		return (1);
@@ -93,30 +92,58 @@ history_t *h_dequeue(his_q_t *q)
 	return (old_node);
 }
 
-/* ONLY USED FOR DEBUGGING */
 /**
- * print_h_queue - Prints the contents of the
- * history queue
+ * write_h_queue - Writes the input node to a file
+ * descriptor
  *
  * @q: Pointer to the queue
+ * @fd: File descriptor
  *
+ * Description:  5 bytes = \t + 2 spaces + \n + \0,
+ *               3 bytes = \t + 2 spaces.
  * Return: none
  */
 
-void print_h_queue(his_q_t *q)
+void write_h_queue(his_q_t *q, int fd)
 {
+	int s_command = 0, s_number = 0, check_write = 0, total = 0, i, j, k;
+	char *priority_n_s = NULL, *node_buffer = NULL;
 	history_t *temp = NULL;
 
 	if (!q)
 		printf("NO HISTORY");
-
 	temp = q->front;
-
 	while (temp)
 	{
-		printf("%d\n", temp->priority_number);
-		printf("%s\n", temp->command);
+		priority_n_s = get_int(temp->priority_number);
+		if (!priority_n_s)
+			return;
+		s_number = _strlen(priority_n_s);
+		s_command = _strlen(temp->command);
+		total = s_number + s_command + 5;
+		str_index = s_number + 3;
+		node_buffer = malloc(sizeof(char) * total);
+		if (!node_buffer)
+			return;
+		i = j = k = 0;
+		while (i < total)
+		{
+			if (i == 0)
+				node_buffer[i] = '\t';
+			else if (i < s_number + 1)
+				node_buffer[i] = priority_n_s[j++];
+			else if (i < str_index)
+				node_buffer[i] = temp->command[k++];
+			else
+				node_buffer[i] = '\n';
+			i++;
+		}
+		node_buffer[i] = '\0';
+		free(priority_n_s);
+		check_write = write(fd, node_buffer, total);
+		if (check_write < 0)
+			return;
+		free(node_buffer);
 		temp = temp->next;
-		printf("\nENDOFHISTORY\n");
 	}
 }

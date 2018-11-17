@@ -157,6 +157,15 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 			break;
 		}
 		break;
+
+	case 'h':
+		switch (cmd_tok[1])
+		{
+		case 'i': /* checks history */
+			print_h_queue();
+			break;
+		}
+		break;
 	}
 	if (check_fnc < 1)
 		return (0);
