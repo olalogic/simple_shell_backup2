@@ -36,39 +36,39 @@ void write_queue_to_file(his_q_t *q)
 
 
 	while (temp)
-        {
-                priority_n_s = get_int(temp->priority_number);
-                if (!priority_n_s)
-                        return;
-                s_number = _strlen(priority_n_s);
-                s_command = _strlen(temp->command);
-                total = s_number + s_command + 5;
-                str_index = s_number + 3;
-                node_buffer = malloc(sizeof(char) * total);
-                if (!node_buffer)
-                        return;
-                i = j = k = 0;
-                while (i < total)
-                {
-                        if (i == 0)
-                                node_buffer[i] = '\t';
-                        else if (i < s_number + 1)
-                                node_buffer[i] = priority_n_s[j++];
-                        else if (i < str_index)
-                                node_buffer[i] = temp->command[k++];
-                        else
-                                node_buffer[i] = '\n';
-                        i++;
-                }
-                node_buffer[i] = '\0';
-                free(priority_n_s);
-                check_write = write(check_open, node_buffer, total);
-                if (check_write < 0)
-                        return; 
+	{
+		priority_n_s = get_int(temp->priority_number);
+		if (!priority_n_s)
+			return;
+		s_number = _strlen(priority_n_s);
+		s_command = _strlen(temp->command);
+		total = s_number + s_command + 5;
+		str_index = s_number + 3;
+		node_buffer = malloc(sizeof(char) * total);
+		if (!node_buffer)
+			return;
+		i = j = k = 0;
+		while (i < total)
+		{
+			if (i == 0)
+				node_buffer[i] = '\t';
+			else if (i < s_number + 1)
+				node_buffer[i] = priority_n_s[j++];
+			else if (i < str_index)
+				node_buffer[i] = temp->command[k++];
+			else
+				node_buffer[i] = '\n';
+			i++;
+		}
+		node_buffer[i] = '\0';
+		free(priority_n_s);
+		check_write = write(check_open, node_buffer, total);
+		if (check_write < 0)
+			return;
 		strncpy(check_open, home, total); /* CANT USE STRNCPY */
 		free(node_buffer);
-                temp = temp->next;
-        }
+		temp = temp->next;
+	}
 	check_close = close(check_open);
 	if (check_close < 0)
 		return;
