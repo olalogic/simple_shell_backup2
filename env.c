@@ -119,8 +119,8 @@ void advance_env(char **path_env)
 	if (!path_env)
 		return;
 	token = *path_env;
-	while (*token++ != '=')
-		;
+	while (*token != '=')
+		token++;
 	token++; /* set to character beyond equal sign */
 	*path_env = token;
 }
