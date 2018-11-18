@@ -100,7 +100,7 @@ history_t *h_dequeue(his_q_t *q)
  * @q: Pointer to the queue
  * @fd: File descriptor
  *
- * Description:  5 bytes = \t + 2 spaces + \n + \0,
+ * Description:  4 bytes = \t + 2 spaces + \n
  *               3 bytes = \t + 2 spaces.
  * Return: none
  */
@@ -121,7 +121,7 @@ void write_h_queue(his_q_t *q, int fd)
 			return;
 		s_number = _strlen(priority_n_s);
 		s_command = _strlen(temp->command);
-		total = s_number + s_command + 5;
+		total = s_number + s_command + 4;
 		s_i = s_number + 3;
 		node_buffer = malloc(sizeof(char) * total);
 		if (!node_buffer)
@@ -141,7 +141,6 @@ void write_h_queue(his_q_t *q, int fd)
 				node_buffer[i] = '\n';
 			i++;
 		}
-		node_buffer[i] = '\0';
 		free(priority_n_s);         /* total - 1: forget \0 */
 		err = write(fd, node_buffer, total - 1);
 		if (err < 0)

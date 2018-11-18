@@ -127,6 +127,7 @@ int _atoi(char *str);
 int _strlen(char *str);
 char *get_int(int num);
 char *_getenv(char *env_name);
+char *combine_path(char *dir, char *file);
 
 /* print errors */
 void print_no_file_error(void);
