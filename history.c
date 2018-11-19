@@ -78,15 +78,16 @@ void free_history_node(history_t *node)
 
 void free_history_queue(his_q_t *q)
 {
-	history_t *temp = NULL;
+	history_t *store = NULL, *temp = NULL;
 
 	if (!q)
 		return;
 	temp = q->front;
 	while (temp)
 	{
+		store = temp->next;
 		free_history_node(temp);
-		temp = temp->next;
+		temp = store;
 	}
 
 	q->front = q->rear = NULL;
