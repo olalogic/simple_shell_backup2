@@ -25,7 +25,8 @@ int start_shell(char **environ)
 		return (-1); /* failed to create history queue */
 	while (1)
 	{
-		print_prompt();
+		if (isatty(STDIN_FILENO))
+			print_prompt();
 		bytes_read = getline(&input, &input_buff_size, stdin);
 		if (bytes_read < 0 || input[0] == '\n')
 		{
@@ -36,7 +37,8 @@ int start_shell(char **environ)
 			}
 			if (bytes_read < 0)
 			{
-				print_newline();
+				if (isatty(STDIN_FILENO))
+					print_newline();
 				fflush(stdin);
 				return (0); /* EOF received, exit shell */
 			}
