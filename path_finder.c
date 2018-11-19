@@ -49,6 +49,8 @@ char *get_correct_path(char *filename, char **paths)
 	int tok_i = 0, new_tok_i = 0, fn_i = 0, path_i = 0;
 	int is_file = 0;
 
+	if (test_path(filename))
+		return (filename);
 	fname_len = _strlen(filename);
 	/* loop through our tokens */
 	while (paths[tok_i])

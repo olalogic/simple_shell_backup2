@@ -199,7 +199,8 @@ int execute_normal_command(command_t *command, char *envp[])
 	else /* parent */
 	{
 		wait_err = waitpid(pid, &process_status, 0);
-		free(file_w_path);
+		if (file_w_path != command->command[0]) /* path changed */
+			free(file_w_path);
 		if (wait_err < 0)
 			return (98);
 		return (process_status);
