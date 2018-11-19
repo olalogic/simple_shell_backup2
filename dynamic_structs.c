@@ -1,6 +1,5 @@
 #include "shell.h"
 #include <stdlib.h>
-#include <stdio.h>
 /**
  * create_command - creates space for command structure containing data passed
  * @command: array of pointers to tokens used in command including command
@@ -37,7 +36,6 @@ void free_command_queue(queue_t *q)
 
 	if (!q)
 		return;
-	printf("attempting to free command queue...");
 	temp = q->front;
 	while (temp)
 	{
@@ -46,7 +44,6 @@ void free_command_queue(queue_t *q)
 	}
 	q->front = q->rear = NULL;
 	free(q);
-	printf("freed command queue\n");
 }
 
 /**

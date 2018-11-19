@@ -85,27 +85,28 @@ command_t *dequeue(queue_t *q)
  *
  * Return: Node that was executed
  */
-
-void print_queue(queue_t *q)
-{
-	int i = 0;
-
-	command_t *temp = NULL;
-
-	if (!q)
-		printf("NULL QUEUE");
-
-	temp = q->front;
-
-	while (temp)
-	{
-		printf("%d\n", temp->prev_valid);
-		printf("%c\n", temp->separator);
-		i = 0;
-		while (temp->command[i])
-			printf("%s, ", temp->command[i++]);
-		printf("\n");
-		temp = temp->next;
-		printf("\nENDOFCOMMAND\n");
-	}
-}
+/*
+* void print_queue(queue_t *q)
+* {
+*	int i = 0;
+*
+*	command_t *temp = NULL;
+*
+*	if (!q)
+*		printf("NULL QUEUE");
+*
+*	temp = q->front;
+*
+*	while (temp)
+*	{
+*		printf("%d\n", temp->prev_valid);
+*		printf("%c\n", temp->separator);
+*		i = 0;
+*		while (temp->command[i])
+*			printf("%s, ", temp->command[i++]);
+*		printf("\n");
+*		temp = temp->next;
+*		printf("\nENDOFCOMMAND\n");
+*	}
+*}
+*/

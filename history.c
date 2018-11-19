@@ -82,8 +82,6 @@ void free_history_queue(his_q_t *q)
 
 	if (!q)
 		return;
-	printf("freeing the history queue...");
-
 	temp = q->front;
 	while (temp)
 	{
@@ -93,5 +91,4 @@ void free_history_queue(his_q_t *q)
 
 	q->front = q->rear = NULL;
 	free(q);
-	printf("history queue successfully freed...\n");
 }

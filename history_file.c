@@ -20,20 +20,14 @@ void write_queue_to_file(his_q_t *q)
 	char *abs_path = NULL;
 
 	if (!q)
-	{
-		printf("NO HISTORY\n");
 		return;
-	}
 
-	printf("_getenv got:%s\n", home);
 	abs_path = combine_path(home, fn);
 	if (!abs_path)
 		return;
-	printf("combine_path got:%s\n", abs_path);
 	open_fd = open(abs_path, O_CREAT | O_TRUNC | O_RDWR, 0600);
 	if (open_fd < 0)
 	{
-		printf("FILE NOT OPENED\n");
 		free(abs_path);
 		return;
 	}
@@ -46,7 +40,6 @@ void write_queue_to_file(his_q_t *q)
 		;/* close error */
 	}
 	free(abs_path);
-	printf("write_queue_to_file success\n");
 }
 
 /**
