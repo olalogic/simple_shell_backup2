@@ -63,9 +63,9 @@ char *combine_path(char *dir, char *file)
 
 	f_len = _strlen(file);
 	d_len = _strlen(dir);
-	n_len = d_len + f_len + 1 + 1; /* '/' & '\0' */
+	n_len = d_len + f_len + 1; /* '/' & '\0' */
 
-	new_path = malloc(sizeof(char) * n_len);
+	new_path = malloc(sizeof(char) * n_len + 1);
 	if (!new_path)
 		return (NULL);
 
