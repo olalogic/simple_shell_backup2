@@ -130,7 +130,7 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 				queue_t *q)
 {
 	char *cmd_tok;
-	int check_fnc = 0;
+	int check_fnc = 0, exit_status = 0;
 
 	if (!command)
 		return (0);
@@ -143,8 +143,9 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 		switch (cmd_tok[1])
 		{
 		case 'x': /* check exit */
+			exit_status = _atoi(command->command[1]);
 			free_command(command);
-			exit_shell(his_q, q, _atoi(command->command[1]), envp);
+			exit_shell(his_q, q, exit_status, envp);
 			break;
 
 		case 'n': /* check env */
