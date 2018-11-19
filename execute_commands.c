@@ -150,10 +150,6 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 		case 'n': /* check env */
 			check_fnc = print_env(envp);
 			break;
-
-		default: /* THIS SHOULDNT RUN */
-			print_no_file_error();
-			break;
 		}
 		break;
 	case 'h':
@@ -185,7 +181,10 @@ int execute_normal_command(command_t *command, char *envp[])
 
 	file_w_path = get_file_path(command->command[0], envp);
 	if (!file_w_path)
+	{
+		print_no_file_error();
 		return (98);
+	}
 	pid = fork();
 	if (pid < 0) /* fork failure, too many processes open */
 		return (98);
