@@ -78,7 +78,7 @@ typedef struct his_q_s
 } his_q_t;
 
 /* main functionality */
-int start_shell(void);
+int start_shell(char **environ);
 queue_t *parse_string(char *input_str);
 int execute_commands(his_q_t *his_q, queue_t *command_q, char *envp[]);
 char *get_file_path(char *filename, char *envp[]);
