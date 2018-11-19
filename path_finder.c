@@ -28,8 +28,13 @@ char *get_file_path(char *filename, char **envp)
 	path_env = _getenv("PATH", envp);
 	/* tokenize paths */
 	paths = strtow(path_env, PATH_DELIMS);
+
 	if (!paths)
+	{
+		if (test_path(filename))
+			return (filename);
 		return (NULL);
+	}
 	ret = get_correct_path(filename, paths);
 	free_token_list(paths);
 	return (ret);
@@ -49,8 +54,6 @@ char *get_correct_path(char *filename, char **paths)
 	int tok_i = 0, new_tok_i = 0, fn_i = 0, path_i = 0;
 	int is_file = 0;
 
-	if (test_path(filename))
-		return (filename);
 	fname_len = _strlen(filename);
 	/* loop through our tokens */
 	while (paths[tok_i])
@@ -88,6 +91,9 @@ char *get_correct_path(char *filename, char **paths)
 		free(new_tok);
 		tok_i++;
 	}
+	/* didn't find in path, check if file name works */
+	if (test_path(filename))
+		return (filename);
 	return (NULL); /* didn't find file */
 }
 

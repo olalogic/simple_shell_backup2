@@ -66,9 +66,11 @@ int print_env(char *envp[])
  */
 char *_getenv(char *env_name, char **environ)
 {
-	char *ret;
+	char *ret = NULL;
 	int i = 0;
 
+	if (!environ)
+		return (NULL);
 	while (*environ[i])
 	{
 		if (is_name_env(environ[i], env_name))
@@ -80,7 +82,8 @@ char *_getenv(char *env_name, char **environ)
 	}
 	/* advance pointer to after ENV=env_var */
 	/*                              ^       */
-	advance_env(&ret);
+	if (ret)
+		advance_env(&ret);
 
 	return (ret);
 }
@@ -102,7 +105,9 @@ int is_name_env(char *token, char *env_name)
 		if (token[tok_i++] != env_name[path_i++])
 			return (0);
 	}
-	return (1);
+	if (tok_i > 1)
+		return (1);
+	return (0);
 }
 
 /**
