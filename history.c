@@ -35,7 +35,7 @@ history_t *create_history_t(char *command, int set_p_no)
 		i++;
 	}
 	input[i] = '\0';
-	
+
 	node = malloc(sizeof(history_t));
 	if (!node)
 	{
@@ -69,9 +69,9 @@ void free_history_node(history_t *node)
 }
 
 /**
- * free_history_node - Frees node in history queue
+ * free_history_queue - Frees node in history queue
  *
- * @node: Pointer to node
+ * @q: Pointer to queue
  *
  * Return: none
  */

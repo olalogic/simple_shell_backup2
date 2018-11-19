@@ -107,7 +107,7 @@ history_t *h_dequeue(his_q_t *q)
 
 void write_h_queue(his_q_t *q, int fd)
 {
-	int s_command = 0, s_number = 0, err = 0, total = 0, i, j, k, s_i = 0;
+	int s_command = 0, s_number = 0, total = 0, i, j, k, s_i = 0;
 	char *priority_n_s = NULL, *node_buffer = NULL;
 	history_t *temp = NULL;
 
@@ -141,10 +141,8 @@ void write_h_queue(his_q_t *q, int fd)
 				node_buffer[i] = '\n';
 			i++;
 		}
-		free(priority_n_s);         /* total - 1: forget \0 */
-		err = write(fd, node_buffer, total - 1);
-		if (err < 0)
-			return;
+		free(priority_n_s); /* total - 1: forget \0 */
+		write(fd, node_buffer, total - 1);
 		free(node_buffer);
 		temp = temp->next;
 	}

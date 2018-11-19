@@ -19,6 +19,7 @@ int execute_custom_command(command_t *, char **, his_q_t *, queue_t *);
  * execute_commands - executes a queue of commands in FIFO order
  * @command_q: the queue of commands to execute
  * @envp: double pointer to the tokens
+ * @his_q: pointer to history queue for use in customs
  *
  * Return: 1 (success) 0 (failure).
  */
@@ -121,23 +122,21 @@ int is_custom_command(char *token)
  * @command: pointer to the command to execute
  * @q: pointer to the queue
  * @envp: double pointer to the token
- * @comm
+ * @his_q: history queue to free
+ *
  * Return: (1) executed successfully, (0) failed execution
  */
 int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 				queue_t *q)
 {
 	char *cmd_tok;
-
 	int check_fnc = 0;
 
 	if (!command)
 		return (0);
 	cmd_tok = command->command[0];
-
 	if (!cmd_tok)
 		return (0);
-
 	switch (cmd_tok[0])
 	{
 	case 'e':
@@ -145,7 +144,7 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 		{
 		case 'x': /* check exit */
 			free_command(command);
-			exit_shell(his_q, q, _atoi(command->command[1]));
+			exit_shell(his_q, q, _atoi(command->command[1]), envp);
 			break;
 
 		case 'n': /* check env */
@@ -157,7 +156,6 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 			break;
 		}
 		break;
-
 	case 'h':
 		switch (cmd_tok[1])
 		{
@@ -169,7 +167,6 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
 	}
 	if (check_fnc < 1)
 		return (0);
-
 	return (1);
 }
 /**
@@ -186,7 +183,6 @@ int execute_normal_command(command_t *command, char *envp[])
 
 	char *file_w_path = NULL;
 
-	
 	file_w_path = get_file_path(command->command[0], envp);
 	if (!file_w_path)
 		return (98);

@@ -1,6 +1,5 @@
 #include "shell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 
 /**
  * main - Starts the shell CLI
@@ -14,8 +13,10 @@
 
 int main(int argc, char **argv)
 {
+	extern char **environ;
+
 	(void)argc;
 	(void)argv;
 
-	return (start_shell());
+	return (start_shell(environ));
 }

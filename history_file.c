@@ -8,15 +8,16 @@
  * write_queue_to_file - Writes history to file upon exit
  *
  * @q: Pointer to the queue
+ * @environ: array of pointers to environmental variables
  *
  * Return: none
  */
 
-void write_queue_to_file(his_q_t *q)
+void write_queue_to_file(his_q_t *q, char **environ)
 {
 	int check_status = 0, open_fd = 0;
 	char *fn = ".simple_shell_history";
-	char *home = _getenv("HOME"); /* CANT USE GETENV */
+	char *home = _getenv("HOME", environ);
 	char *abs_path = NULL;
 
 	if (!q)

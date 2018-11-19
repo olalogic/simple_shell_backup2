@@ -24,8 +24,8 @@ char *get_file_path(char *filename, char **envp)
 
 	if (!filename || !envp)
 		return (NULL);
-	
-	path_env = _getenv("PATH");
+
+	path_env = _getenv("PATH", envp);
 	/* tokenize paths */
 	paths = strtow(path_env, PATH_DELIMS);
 	if (!paths)

@@ -112,10 +112,10 @@ history_t *h_dequeue(his_q_t *q);
 void write_h_queue(his_q_t *q, int fd);
 
 /* writing/loading history file */
-void write_queue_to_file(his_q_t *q);
+void write_queue_to_file(his_q_t *q, char **env);
 
 /* custom functions for custom commands */
-void exit_shell(his_q_t *his_q, queue_t *q, int status);
+void exit_shell(his_q_t *his_q, queue_t *q, int status, char **env);
 int print_env(char *envp[]);
 
 /* handling signals */
@@ -126,7 +126,7 @@ int register_signal_handlers(void);
 int _atoi(char *str);
 int _strlen(char *str);
 char *get_int(int num);
-char *_getenv(char *env_name);
+char *_getenv(char *env_name, char **environ);
 char *combine_path(char *dir, char *file);
 
 /* print errors */
