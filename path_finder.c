@@ -57,7 +57,7 @@ char *get_correct_path(char *filename, char **paths)
 	{
 		cur_tok_len = _strlen(paths[tok_i]);
 		new_tok_len = cur_tok_len + fname_len + 1;
-		new_tok = malloc(sizeof(char) * new_tok_len);
+		new_tok = malloc(sizeof(char) * new_tok_len + 1);
 		if (!new_tok)
 			return (NULL);
 
