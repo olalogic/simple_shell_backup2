@@ -14,7 +14,7 @@
 int can_execute(command_t *command);
 int is_custom_command(char *token);
 int execute_normal_command(command_t *command, char *envp[]);
-int execute_custom_command(command_t *command, char *envp[], queue_t *q);
+int execute_custom_command(command_t *, char **, his_q_t *, queue_t *);
 /**
  * execute_commands - executes a queue of commands in FIFO order
  * @command_q: the queue of commands to execute
@@ -22,7 +22,7 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q);
  *
  * Return: 1 (success) 0 (failure).
  */
-int execute_commands(queue_t *command_q, char *envp[])
+int execute_commands(his_q_t *his_q, queue_t *command_q, char *envp[])
 {
 	command_t *cur_node = NULL;
 	int run_com = 0;
@@ -40,7 +40,7 @@ int execute_commands(queue_t *command_q, char *envp[])
 		{
 			is_custom_com = is_custom_command(cur_node->command[0]);
 			if (is_custom_com >= 0)
-				run_com = execute_custom_command(cur_node, envp, command_q);
+				run_com = execute_custom_command(cur_node, envp, his_q, command_q);
 			else
 				run_com = execute_normal_command(cur_node, envp);
 		}
@@ -124,7 +124,8 @@ int is_custom_command(char *token)
  * @comm
  * Return: (1) executed successfully, (0) failed execution
  */
-int execute_custom_command(command_t *command, char *envp[], queue_t *q)
+int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
+				queue_t *q)
 {
 	char *cmd_tok;
 
@@ -144,7 +145,7 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 		{
 		case 'x': /* check exit */
 			free_command(command);
-			exit_shell(q, _atoi(command->command[1]));
+			exit_shell(his_q, q, _atoi(command->command[1]));
 			break;
 
 		case 'n': /* check env */
@@ -153,6 +154,15 @@ int execute_custom_command(command_t *command, char *envp[], queue_t *q)
 
 		default: /* THIS SHOULDNT RUN */
 			print_no_file_error();
+			break;
+		}
+		break;
+
+	case 'h':
+		switch (cmd_tok[1])
+		{
+		case 'i': /* checks history */
+			write_h_queue(his_q, STDOUT_FILENO);
 			break;
 		}
 		break;
@@ -174,20 +184,28 @@ int execute_normal_command(command_t *command, char *envp[])
 	int process_status = 0;
 	int wait_err = 0;
 
+	char *file_w_path = NULL;
+
+	
+	file_w_path = get_file_path(command->command[0], envp);
+	if (!file_w_path)
+		return (98);
 	pid = fork();
 	if (pid < 0) /* fork failure, too many processes open */
-		return (0);
+		return (98);
 	else if (pid == 0) /* child process */
 	{
-		execve(command->command[0], command->command, envp);
+
+		execve(file_w_path, command->command, envp);
 		/* child process should exit on success so this shouldn't run */
 		exit(98); /* process failed to execute, return 98 to parent */
 	}
 	else /* parent */
 	{
 		wait_err = waitpid(pid, &process_status, 0);
+		free(file_w_path);
 		if (wait_err < 0)
-			return (0);
+			return (98);
 		return (process_status);
 	}
 	return (98); /* should not hit this return ever, failure if it does */
