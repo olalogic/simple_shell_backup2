@@ -172,10 +172,10 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
  * execute_normal_command - executes the normal command in sub process
  * @command: pointer to the command to execute
  * @envp: double pointer to the tokens
+ * @exec_name: pointer to string to pass to error message
  * Return: exit status of executed process (0 on success, error code on fail)
  */
-int execute_normal_command(command_t *command, char *envp[],
-				char *exec_name)
+int execute_normal_command(command_t *command, char *envp[], char *exec_name)
 {
 	int pid = 0;
 	int process_status = 0;

@@ -64,7 +64,7 @@ typedef struct history_s
 } history_t;
 
 /**
- * struct his_q_t - Structure of queue
+ * struct his_q_s - Structure of queue
  *
  * @front: Pointer to the first node
  *
@@ -74,7 +74,7 @@ typedef struct history_s
 
 typedef struct his_q_s
 {
-        history_t *front, *rear;
+	history_t *front, *rear;
 } his_q_t;
 
 /* main functionality */
