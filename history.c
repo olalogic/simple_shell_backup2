@@ -1,7 +1,6 @@
 #include "shell.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 /**
  * *create_history_t - Creates a history node

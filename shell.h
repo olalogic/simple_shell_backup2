@@ -1,9 +1,12 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
-
+#include <unistd.h>
 /* delimeter macros */
 #define NORM_DELIMS " \t\a\r\n"
 #define PATH_DELIMS ":"
+
+/* external environmental variable array */
+extern char **environ;
 
 /**
  * struct command_s - Structure of each node

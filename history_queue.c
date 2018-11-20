@@ -1,7 +1,6 @@
 #include "shell.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 
 /**
  * get_history - checks if there is a history file present, pulls from that
