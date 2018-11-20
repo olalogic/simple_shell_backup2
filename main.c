@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 	extern char **environ;
 
 	(void)argc;
-	(void)argv;
 
-	return (start_shell(environ));
+	return (start_shell(environ, argv[0]));
 }

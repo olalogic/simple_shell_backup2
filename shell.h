@@ -78,9 +78,10 @@ typedef struct his_q_s
 } his_q_t;
 
 /* main functionality */
-int start_shell(char **environ);
+int start_shell(char **environ, char *exec_name);
 queue_t *parse_string(char *input_str);
-int execute_commands(his_q_t *his_q, queue_t *command_q, char *envp[]);
+int execute_commands(his_q_t *his_q, queue_t *command_q,
+			char *envp[], char *exec_name);
 char *get_file_path(char *filename, char *envp[]);
 
 /* free memory */
@@ -130,7 +131,7 @@ char *_getenv(char *env_name, char **environ);
 char *combine_path(char *dir, char *file);
 
 /* print errors */
-void print_no_file_error(void);
+void print_no_file_error(char *executable_name);
 void print_signal_reg_error(void);
 void print_prompt(void);
 void print_newline(void);

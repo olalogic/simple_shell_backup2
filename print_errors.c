@@ -1,15 +1,36 @@
 #include "shell.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 /**
  * print_no_file_error - prints the no file error message to STDOUT
  *
  * Return: always void.
  */
-void print_no_file_error(void)
+void print_no_file_error(char *exec_name)
 {
-	write(STDOUT_FILENO, "./seashell: No such file or directory\n", 38);
+	char *buff = NULL;
+	char *msg = ": No such file or directory\n";
+	int exec_len = 0, msg_len = 0, i = 0, e_i = 0, m_i = 0;
+
+	exec_len = _strlen(exec_name);
+	msg_len = _strlen(msg);
+
+	buff = malloc(sizeof(char) * (exec_len + msg_len));
+	if (!buff)
+		return;
+	/* fill buffer with error message */
+	while (i < exec_len + msg_len)
+	{
+		if (i < exec_len)
+			buff[i] = exec_name[e_i++];
+		else
+			buff[i] = msg[m_i++];
+		i++;
+	}
+	write(STDOUT_FILENO, buff, exec_len + msg_len);
+	free(buff);
 }
 
 /**

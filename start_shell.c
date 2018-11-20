@@ -7,10 +7,11 @@
  * start_shell - starts our loop looking for user's commands
  *
  * @environ: array of environmental variables
+ * @exec_name: name of executable (name of our shell)
  *
  * Return: 0 on success, anything else on failure, error code dependent
  */
-int start_shell(char **environ)
+int start_shell(char **environ, char *exec_name)
 {
 	char *input = NULL;
 	size_t input_buff_size = 0;
@@ -54,7 +55,8 @@ int start_shell(char **environ)
 			free(input);
 			input = NULL;
 		}
-		if (execute_commands(his_q, com_q, environ) < 0)
+		if (execute_commands(his_q, com_q,
+					environ, exec_name) < 0)
 			return (-1); /* failed to execute commands */
 		free_command_queue(com_q);
 	}

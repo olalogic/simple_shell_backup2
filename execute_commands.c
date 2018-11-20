@@ -13,17 +13,19 @@
 
 int can_execute(command_t *command);
 int is_custom_command(char *token);
-int execute_normal_command(command_t *command, char *envp[]);
+int execute_normal_command(command_t *command, char *envp[], char *);
 int execute_custom_command(command_t *, char **, his_q_t *, queue_t *);
 /**
  * execute_commands - executes a queue of commands in FIFO order
  * @command_q: the queue of commands to execute
  * @envp: double pointer to the tokens
  * @his_q: pointer to history queue for use in customs
+ * @exec_name: name of current executable, used in error message
  *
  * Return: 1 (success) 0 (failure).
  */
-int execute_commands(his_q_t *his_q, queue_t *command_q, char *envp[])
+int execute_commands(his_q_t *his_q, queue_t *command_q,
+			char *envp[], char *exec_name)
 {
 	command_t *cur_node = NULL;
 	int run_com = 0;
@@ -43,7 +45,7 @@ int execute_commands(his_q_t *his_q, queue_t *command_q, char *envp[])
 			if (is_custom_com >= 0)
 				run_com = execute_custom_command(cur_node, envp, his_q, command_q);
 			else
-				run_com = execute_normal_command(cur_node, envp);
+				run_com = execute_normal_command(cur_node, envp, exec_name);
 		}
 		/* set validity of next->prev_valid based on result */
 		if (cur_node->next)
@@ -172,7 +174,8 @@ int execute_custom_command(command_t *command, char *envp[], his_q_t *his_q,
  * @envp: double pointer to the tokens
  * Return: exit status of executed process (0 on success, error code on fail)
  */
-int execute_normal_command(command_t *command, char *envp[])
+int execute_normal_command(command_t *command, char *envp[],
+				char *exec_name)
 {
 	int pid = 0;
 	int process_status = 0;
@@ -183,7 +186,7 @@ int execute_normal_command(command_t *command, char *envp[])
 	file_w_path = get_file_path(command->command[0], envp);
 	if (!file_w_path)
 	{
-		print_no_file_error();
+		print_no_file_error(exec_name);
 		return (98);
 	}
 	pid = fork();
