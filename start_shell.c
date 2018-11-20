@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int do_shell_eof_or_newline(char *input, int bytes_read);
+
 /**
  * start_shell - starts our loop looking for user's commands
  *
@@ -30,18 +32,9 @@ int start_shell(char **environ, char *exec_name)
 		bytes_read = getline(&input, &input_buff_size, stdin);
 		if (bytes_read < 0 || input[0] == '\n')
 		{
-			if (input)
-			{
-				free(input);
-				input = NULL;
-			}
-			if (bytes_read < 0)
-			{
-				if (isatty(STDIN_FILENO))
-					print_newline();
-				fflush(stdin);
-				return (0); /* EOF received, exit shell */
-			}
+			/* EOF was received if return is 0 */
+			if (!do_shell_eof_or_newline(input, bytes_read))
+				return (0);
 			continue;
 		}
 		fflush(stdin);
@@ -69,4 +62,30 @@ int start_shell(char **environ, char *exec_name)
 void print_prompt(void)
 {
 	write(STDOUT_FILENO, "> ", 2);
+}
+/**
+ * do_shell_eof_or_newline - decides if received input is EOF or \n
+ * @input: pointer to input string to be freed b/c will either exit
+ *         or reprint prompt and get new input, so we must free.
+ * @bytes_read: bytes read by getline(), used to determine if EOF
+ *
+ * Return: (1) newline was received, (0) EOF was received
+ */
+int do_shell_eof_or_newline(char *input, int bytes_read)
+{
+
+	/* user pressed return, got new line, free input and continue */
+	if (input)
+	{
+		free(input);
+		input = NULL;
+	}
+	if (bytes_read < 0)
+	{
+		if (isatty(STDIN_FILENO))
+			print_newline();
+		fflush(stdin);
+		return (0); /* EOF received, exit shell */
+	}
+	return (1);
 }
