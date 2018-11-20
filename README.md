@@ -1,6 +1,6 @@
 # :ocean: :shell: SeaShell
 
-cshell is an implementation of the original UNIX shell in C. It uses the POSIX API to implement a lot of the same functionality of Ken Thompson's first shell. The API calls predominantly used are <code>read</code> <code>write</code> <code>fork</code> <code>exec</code> <code>wait</code> to name a few.
+cshell is an implementation of the original UNIX shell in C. It uses the POSIX API to implement a lot of the same functionality of Ken Thompson's first shell. The API calls predominantly used are <code>read</code>, <code>write</code>, <code>fork</code>, <code>exec</code>, and <code>wait</code> to name a few.
 
 
 ## :running: Getting Started
@@ -59,7 +59,8 @@ this will print!
 Using `;` to seperate commands and run regardless of success
 
 ```
-> ls -l /asdfasdf ; echo printme! ; wc -l main.c                   D ls: cannot access /asdfasdf: No such file or directory
+> ls -l /asdfasdf ; echo printme! ; wc -l main.c
+ls: cannot access /asdfasdf: No such file or directory
 printme!
  21 316 main.c
 ```
