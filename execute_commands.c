@@ -197,6 +197,7 @@ int execute_normal_command(command_t *command, char *envp[],
 
 		execve(file_w_path, command->command, envp);
 		/* child process should exit on success so this shouldn't run */
+		print_perm_denied(exec_name);
 		exit(98); /* process failed to execute, return 98 to parent */
 	}
 	else /* parent */

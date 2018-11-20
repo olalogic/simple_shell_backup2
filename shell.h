@@ -132,6 +132,7 @@ char *combine_path(char *dir, char *file);
 
 /* print errors */
 void print_no_file_error(char *executable_name);
+void print_perm_denied(char *executable_name);
 void print_signal_reg_error(void);
 void print_prompt(void);
 void print_newline(void);
