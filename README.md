@@ -1,8 +1,6 @@
-# :ocean: :shell: cshell
+# :ocean: :shell: SeaShell
 
-cshell is an implementation of the original UNIX shell in C. It uses the POSIX API to implement a lot of the same functionality of Ken Thompson's first shell. The API calls predominantly used are <code>read</code> <code>write</code> <code>fork</code> <code>exec</code> <code>wait</code> to name a few. There are some limitations to this project such as:
-
-TODO
+cshell is an implementation of the original UNIX shell in C. It uses the POSIX API to implement a lot of the same functionality of Ken Thompson's first shell. The API calls predominantly used are <code>read</code>, <code>write</code>, <code>fork</code>, <code>exec</code>, and <code>wait</code> to name a few.
 
 
 ## :running: Getting Started
@@ -25,28 +23,66 @@ $ sudo apt-get install git
 
 ## :arrow_down: Installing
 
-Clone the repository
+Clone the repository into a new directory
 
 ```
-$ git clone TODO
+$ git clone https://github.com/BennettDixon/simple_shell.git
 ```
-Include in header file
+Compile with the following:
 
 ```
-#include "shell.h"
+gcc -Wall -Werror -Wextra -pedantic *.c -o seashell
 ```
-
-
-## :bookmark_tabs: Features
-
-* %TODO : TODO
 
 
 ## :clipboard: Examples
 
-TODO
+Using `$PATH` to find custom commands (executables)
 
+```
+> echo dog
+dog
+> /bin/echo dog
+dog
+```
 
+Using `&&` or `||` logic to run commands based on success
+
+```
+> ls -l /asdfasdf && echo this won't print!
+ls: cannot access /asdfasdf: No such file or directory 
+> ls -l /asdfasdf || echo this will  print!
+ls: cannot access /asdfasdf: No such file or directory
+this will print!
+```
+
+Using `;` to seperate commands and run regardless of success
+
+```
+> ls -l /asdfasdf ; echo printme! ; wc -l main.c
+ls: cannot access /asdfasdf: No such file or directory
+printme!
+ 21 316 main.c
+```
+
+Using `exit [status]` to exit the process with status number
+
+```
+> exit 102
+vagrant@vagrant-ubuntu-trusty-64:~/simple_shell$ echo $?
+102
+```
+
+Using `env` to print the environmental variables
+
+```
+> env
+XDG_SESSION_ID=30
+TERM=ansi
+SHELL=/home/vagrant/simple_shell/seashell
+...
+...
+```
 ## :books: Coding Style Tests
 
 Strictly followed `Betty` style guide. To install
@@ -82,4 +118,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * Bennett Dixon (for being a wizard)
 * Holberton School (providing guidance)
-* Stack Overflow (help on various bottlenecks occured)
+* Stack Overflow (help on various memory errors (not leaks))
