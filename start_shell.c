@@ -30,7 +30,7 @@ int start_shell(char **environ, char *exec_name)
 		if (isatty(STDIN_FILENO))
 			print_prompt();
 		bytes_read = getline(&input, &input_buff_size, stdin);
-		if (bytes_read < 0 || input[0] == '\n')
+		if (bytes_read <= 0 || input[0] == '\n')
 		{
 			/* EOF was received if return is 0 */
 			if (!do_shell_eof_or_newline(input, bytes_read))
@@ -40,7 +40,7 @@ int start_shell(char **environ, char *exec_name)
 		fflush(stdin);
 		com_q = parse_string(input);
 		if (!com_q)
-			return (-1); /* failed to create list of commands */
+			return (0); /* failed to create list of commands */
 		if (input)
 		{
 			h_enqueue(his_q, input); /* add command to history */
@@ -80,7 +80,7 @@ int do_shell_eof_or_newline(char *input, int bytes_read)
 		free(input);
 		input = NULL;
 	}
-	if (bytes_read < 0)
+	if (bytes_read <= 0)
 	{
 		if (isatty(STDIN_FILENO))
 			print_newline();
