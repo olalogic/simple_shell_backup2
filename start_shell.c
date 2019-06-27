@@ -20,13 +20,15 @@ int start_shell(char **environ, char *exec_name)
 	queue_t *com_q = NULL;
 	his_q_t *his_q = NULL;
 
+	/* attempt to register signal handlers and build history */
 	if (register_signal_handlers() < 0)
 		return (-1);
 	his_q = get_history();
 	if (!his_q)
-		return (-1); /* failed to create history queue */
+		return (-1);
 	while (1)
 	{
+		/* check if being used in interactive mode, if so: print */
 		if (isatty(STDIN_FILENO))
 			print_prompt();
 		bytes_read = getline(&input, &input_buff_size, stdin);
@@ -38,18 +40,22 @@ int start_shell(char **environ, char *exec_name)
 			continue;
 		}
 		fflush(stdin);
+		/* attempt to parse the inputted line into a command queue */
 		com_q = parse_string(input);
 		if (!com_q)
-			return (0); /* failed to create list of commands */
+			return (0);
+		/* add the input to history & disgard b/c command Q built */
 		if (input)
 		{
 			h_enqueue(his_q, input); /* add command to history */
 			free(input);
 			input = NULL;
 		}
+		/* attempt to execute the current command queue and move to */
+		/* the next line after freeing the queue */
 		if (execute_commands(his_q, com_q,
 					environ, exec_name) < 0)
-			return (-1); /* failed to execute commands */
+			return (-1);
 		free_command_queue(com_q);
 	}
 	return (0);
