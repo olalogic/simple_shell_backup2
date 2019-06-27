@@ -39,6 +39,10 @@ gcc -Wall -Werror -Wextra -pedantic *.c -o seashell
 
 ## :clipboard: Examples
 
+Using in Interactive && Non-Interactive Mode
+
+![seashell modes demo](assets/cshell_demo_modes.gif)
+
 Using `$PATH` to find custom commands (executables)
 
 ```
