@@ -133,7 +133,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 
 ## :mega: Acknowledgments
-
-* Bennett Dixon (for being a wizard)
 * Holberton School (providing guidance)
 * Stack Overflow (help on various memory errors (not leaks))
