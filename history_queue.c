@@ -118,10 +118,8 @@ void write_h_queue(his_q_t *q, int fd)
 		priority_n_s = get_int(temp->priority_number);
 		if (!priority_n_s)
 			return;
-		/* grab len needed for chars in string and number of comm */
 		s_number = _strlen(priority_n_s);
 		s_command = _strlen(temp->command);
-		/* make sure there is enough space for spaces, tabs, + null */
 		total = s_number + s_command + 4;
 		s_i = s_number + 3;
 		node_buffer = malloc(sizeof(char) * total);
@@ -130,19 +128,14 @@ void write_h_queue(his_q_t *q, int fd)
 		i = j = k = 0;
 		while (i < total)
 		{
-			/* write the tab */
 			if (i == 0)
 				node_buffer[i] = '\t';
-			/* write the number for the history */
 			else if (i < s_number + 1)
 				node_buffer[i] = priority_n_s[j++];
-			/* index of the number, could be refactored */
 			else if (i < s_i)
 				node_buffer[i] = ' ';
-			/* now above index of number, write the command */
 			else if (i < total - 1)
 				node_buffer[i] = temp->command[k++];
-			/* end with a newline, move to next item in history */
 			else
 				node_buffer[i] = '\n';
 			i++;
